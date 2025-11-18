@@ -32,11 +32,18 @@ jobs:
         from urllib.parse import urlparse
         from datetime import datetime
         
-        # 规则源列表 - 你可以在这里添加或修改规则源
-        rule_sources = [
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.list",
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global.list",
-            # 在这里添加更多规则源URL
+        # 国内规则源列表
+        china_rule_sources = [
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China.list",
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaASN/ChinaASN.list"
+            # 在这里添加更多国内规则源URL
+        ]
+        
+        # 国外规则源列表
+        proxy_rule_sources = [
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list",
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list"
+            # 在这里添加更多国外规则源URL
         ]
         
         # 支持的规则类型
@@ -84,52 +91,69 @@ jobs:
             print(f"从 {source_url} 解析出 {len(rules)} 条规则")
             return rules
         
-        # 主处理逻辑
-        all_rules = set()
-        source_count = {}
+        def generate_rule_file(rules, filename, rule_type):
+            """生成规则文件"""
+            # 按规则类型排序
+            sorted_rules = sorted(rules, key=lambda x: (
+                list(valid_rule_types).index(x.split(',')[0]) if x.split(',')[0] in valid_rule_types else 999,
+                x
+            ))
+            
+            # 生成合并后的文件
+            output_lines = []
+            
+            # 文件头信息
+            output_lines.append(f"# NAME: {rule_type} Rules")
+            output_lines.append(f"# DESCRIPTION: {rule_type} rules merged from multiple sources")
+            output_lines.append(f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            output_lines.append(f"# SOURCES: {len(rules)} unique rules")
+            
+            # 统计各类型规则数量
+            source_count = {}
+            for rule in rules:
+                rule_type = rule.split(',')[0]
+                source_count[rule_type] = source_count.get(rule_type, 0) + 1
+            
+            # 添加规则统计
+            for rule_type in sorted(valid_rule_types):
+                if rule_type in source_count:
+                    output_lines.append(f"# {rule_type}: {source_count[rule_type]}")
+            
+            output_lines.append(f"# TOTAL: {len(sorted_rules)}")
+            output_lines.append("")
+            
+            # 添加规则内容
+            output_lines.extend(sorted_rules)
+            
+            # 写入文件
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(output_lines))
+            
+            print(f"{rule_type} 规则生成完成！总共 {len(sorted_rules)} 条规则")
         
-        for source_url in rule_sources:
+        # 处理国内规则
+        print("=== 开始处理国内规则 ===")
+        china_rules = set()
+        for source_url in china_rule_sources:
             content = download_rules(source_url)
             if content:
                 rules = parse_rules(content, source_url)
-                all_rules.update(rules)
-                
-                # 统计各类型规则数量
-                for rule in rules:
-                    rule_type = rule.split(',')[0]
-                    source_count[rule_type] = source_count.get(rule_type, 0) + 1
+                china_rules.update(rules)
         
-        # 按规则类型排序
-        sorted_rules = sorted(all_rules, key=lambda x: (
-            list(valid_rule_types).index(x.split(',')[0]) if x.split(',')[0] in valid_rule_types else 999,
-            x
-        ))
+        generate_rule_file(china_rules, 'china.list', 'China')
         
-        # 生成合并后的文件
-        output_lines = []
+        # 处理国外规则
+        print("=== 开始处理国外规则 ===")
+        proxy_rules = set()
+        for source_url in proxy_rule_sources:
+            content = download_rules(source_url)
+            if content:
+                rules = parse_rules(content, source_url)
+                proxy_rules.update(rules)
         
-        # 文件头信息
-        output_lines.append("# NAME: Merged Rules")
-        output_lines.append("# DESCRIPTION: Rules merged from multiple sources")
-        output_lines.append(f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        output_lines.append(f"# SOURCES: {len(rule_sources)}")
+        generate_rule_file(proxy_rules, 'proxy.list', 'Proxy')
         
-        # 添加规则统计
-        for rule_type in sorted(valid_rule_types):
-            if rule_type in source_count:
-                output_lines.append(f"# {rule_type}: {source_count[rule_type]}")
-        
-        output_lines.append(f"# TOTAL: {len(sorted_rules)}")
-        output_lines.append("")
-        
-        # 添加规则内容
-        output_lines.extend(sorted_rules)
-        
-        # 写入文件
-        with open('merged-rules.txt', 'w', encoding='utf-8') as f:
-            f.write('\n'.join(output_lines))
-        
-        print(f"合并完成！总共 {len(sorted_rules)} 条规则")
+        print("所有规则处理完成！")
         EOF
         
         # 安装依赖并运行脚本
@@ -141,10 +165,11 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
-        if git diff --quiet; then
+        # 检查文件是否有变化
+        if git diff --quiet china.list proxy.list 2>/dev/null; then
           echo "没有检测到变化"
         else
-          git add merged-rules.txt
-          git commit -m "Update merged rules - $(date +'%Y-%m-%d %H:%M:%S')"
+          git add china.list proxy.list
+          git commit -m "Update rules - China: $(wc -l < china.list) rules, Proxy: $(wc -l < proxy.list) rules - $(date +'%Y-%m-%d %H:%M:%S')"
           git push
         fi
