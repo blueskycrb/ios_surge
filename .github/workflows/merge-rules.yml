@@ -1,22 +1,23 @@
 name: Merge Rules from Multiple Sources
 
 on:
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # 每天UTC时间0点自动运行
+    - cron: '0 0 * * *'
   push:
     branches: [ main ]
 
 jobs:
   merge-rules:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 添加写入权限
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0  # 获取所有历史记录
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -46,29 +47,23 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list"
             # 在这里添加更多国外规则源URL
         ]
-        
         # 支持的规则类型
         valid_rule_types = {
             'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 
-            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME', 'IP-ASN'
+            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME'
         }
         
         def is_valid_rule(line):
-            """检查是否是有效的规则行"""
             line = line.strip()
             if not line or line.startswith('#'):
                 return False
-            
-            # 检查规则格式：类型,值 或 类型,值,参数
             parts = line.split(',')
             if len(parts) < 2:
                 return False
-            
             rule_type = parts[0].strip()
             return rule_type in valid_rule_types
         
         def download_rules(url):
-            """从URL下载规则"""
             try:
                 print(f"正在下载: {url}")
                 response = requests.get(url, timeout=30)
@@ -79,54 +74,40 @@ jobs:
                 return None
         
         def parse_rules(content, source_url):
-            """解析规则内容，移除注释和无效行"""
             rules = set()
             lines = content.split('\n')
-            
             for line in lines:
                 if is_valid_rule(line):
-                    # 标准化规则格式
                     rule = line.strip()
                     rules.add(rule)
-            
             print(f"从 {source_url} 解析出 {len(rules)} 条规则")
             return rules
         
         def generate_rule_file(rules, filename, rule_type):
-            """生成规则文件"""
-            # 按规则类型排序
             sorted_rules = sorted(rules, key=lambda x: (
                 list(valid_rule_types).index(x.split(',')[0]) if x.split(',')[0] in valid_rule_types else 999,
                 x
             ))
             
-            # 生成合并后的文件
             output_lines = []
-            
-            # 文件头信息
             output_lines.append(f"# NAME: {rule_type} Rules")
             output_lines.append(f"# DESCRIPTION: {rule_type} rules merged from multiple sources")
             output_lines.append(f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
             output_lines.append(f"# SOURCES: {len(rules)} unique rules")
             
-            # 统计各类型规则数量
             source_count = {}
             for rule in rules:
                 rule_type = rule.split(',')[0]
                 source_count[rule_type] = source_count.get(rule_type, 0) + 1
             
-            # 添加规则统计
             for rule_type in sorted(valid_rule_types):
                 if rule_type in source_count:
                     output_lines.append(f"# {rule_type}: {source_count[rule_type]}")
             
             output_lines.append(f"# TOTAL: {len(sorted_rules)}")
             output_lines.append("")
-            
-            # 添加规则内容
             output_lines.extend(sorted_rules)
             
-            # 写入文件
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write('\n'.join(output_lines))
             
@@ -157,7 +138,6 @@ jobs:
         print("所有规则处理完成！")
         EOF
         
-        # 安装依赖并运行脚本
         pip install requests
         python merge_rules.py
         
@@ -165,23 +145,21 @@ jobs:
       run: |
         echo "检查生成的文件:"
         ls -la china.list proxy.list
-        echo "china.list 行数: $(wc -l < china.list)"
-        echo "proxy.list 行数: $(wc -l < proxy.list)"
+        echo "china.list 前5行:"
+        head -5 china.list
+        echo "proxy.list 前5行:"
+        head -5 proxy.list
         
     - name: Commit and push changes
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 添加文件到git
         git add china.list proxy.list
         
-        # 检查是否有变化
-        if git diff-index --quiet HEAD --; then
-          echo "没有检测到变化，无需提交"
+        if git diff --staged --quiet; then
+          echo "没有检测到变化"
         else
-          echo "检测到变化，准备提交"
-          git commit -m "Auto-update rules: China $(wc -l < china.list) rules, Proxy $(wc -l < proxy.list) rules [$(date +'%Y-%m-%d %H:%M:%S')]"
-          git push origin main
-          echo "提交成功！"
+          git commit -m "Auto-update rules: China $(wc -l < china.list) rules, Proxy $(wc -l < proxy.list) rules"
+          git push
         fi
