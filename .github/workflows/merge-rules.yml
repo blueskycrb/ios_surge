@@ -1,0 +1,150 @@
+name: Merge Rules from Multiple Sources
+
+on:
+  workflow_dispatch:  # 允许手动触发
+  schedule:
+    - cron: '0 0 * * *'  # 每天UTC时间0点自动运行
+  push:
+    branches: [ main ]
+
+jobs:
+  merge-rules:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Download and merge rules
+      run: |
+        # 创建合并脚本
+        cat > merge_rules.py << 'EOF'
+        #!/usr/bin/env python3
+        import requests
+        import re
+        from urllib.parse import urlparse
+        from datetime import datetime
+        
+        # 规则源列表 - 你可以在这里添加或修改规则源
+        rule_sources = [
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.list",
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global.list",
+            # 在这里添加更多规则源URL
+        ]
+        
+        # 支持的规则类型
+        valid_rule_types = {
+            'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 
+            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME'
+        }
+        
+        def is_valid_rule(line):
+            """检查是否是有效的规则行"""
+            line = line.strip()
+            if not line or line.startswith('#'):
+                return False
+            
+            # 检查规则格式：类型,值 或 类型,值,参数
+            parts = line.split(',')
+            if len(parts) < 2:
+                return False
+            
+            rule_type = parts[0].strip()
+            return rule_type in valid_rule_types
+        
+        def download_rules(url):
+            """从URL下载规则"""
+            try:
+                print(f"正在下载: {url}")
+                response = requests.get(url, timeout=30)
+                response.raise_for_status()
+                return response.text
+            except Exception as e:
+                print(f"下载失败 {url}: {e}")
+                return None
+        
+        def parse_rules(content, source_url):
+            """解析规则内容，移除注释和无效行"""
+            rules = set()
+            lines = content.split('\n')
+            
+            for line in lines:
+                if is_valid_rule(line):
+                    # 标准化规则格式
+                    rule = line.strip()
+                    rules.add(rule)
+            
+            print(f"从 {source_url} 解析出 {len(rules)} 条规则")
+            return rules
+        
+        # 主处理逻辑
+        all_rules = set()
+        source_count = {}
+        
+        for source_url in rule_sources:
+            content = download_rules(source_url)
+            if content:
+                rules = parse_rules(content, source_url)
+                all_rules.update(rules)
+                
+                # 统计各类型规则数量
+                for rule in rules:
+                    rule_type = rule.split(',')[0]
+                    source_count[rule_type] = source_count.get(rule_type, 0) + 1
+        
+        # 按规则类型排序
+        sorted_rules = sorted(all_rules, key=lambda x: (
+            list(valid_rule_types).index(x.split(',')[0]) if x.split(',')[0] in valid_rule_types else 999,
+            x
+        ))
+        
+        # 生成合并后的文件
+        output_lines = []
+        
+        # 文件头信息
+        output_lines.append("# NAME: Merged Rules")
+        output_lines.append("# DESCRIPTION: Rules merged from multiple sources")
+        output_lines.append(f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        output_lines.append(f"# SOURCES: {len(rule_sources)}")
+        
+        # 添加规则统计
+        for rule_type in sorted(valid_rule_types):
+            if rule_type in source_count:
+                output_lines.append(f"# {rule_type}: {source_count[rule_type]}")
+        
+        output_lines.append(f"# TOTAL: {len(sorted_rules)}")
+        output_lines.append("")
+        
+        # 添加规则内容
+        output_lines.extend(sorted_rules)
+        
+        # 写入文件
+        with open('merged-rules.txt', 'w', encoding='utf-8') as f:
+            f.write('\n'.join(output_lines))
+        
+        print(f"合并完成！总共 {len(sorted_rules)} 条规则")
+        EOF
+        
+        # 安装依赖并运行脚本
+        pip install requests
+        python merge_rules.py
+        
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        if git diff --quiet; then
+          echo "没有检测到变化"
+        else
+          git add merged-rules.txt
+          git commit -m "Update merged rules - $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
