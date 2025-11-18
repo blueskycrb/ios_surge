@@ -1,36 +1,22 @@
 # NAME: Proxy Rules
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2025-11-18 13:59:54
-# SOURCES: 230 unique rules
+# UPDATED: 2025-11-18 14:01:22
+# SOURCES: 235 unique rules
 # DOMAIN: 2
 # DOMAIN-KEYWORD: 2
 # DOMAIN-SUFFIX: 201
+# IP-ASN: 5
 # IP-CIDR: 8
 # IP-CIDR6: 5
 # PROCESS-NAME: 5
 # USER-AGENT: 7
-# TOTAL: 230
+# TOTAL: 235
 
-IP-CIDR,109.239.140.0/24,no-resolve
-IP-CIDR,139.59.210.98/32,no-resolve
-IP-CIDR,149.154.160.0/20,no-resolve
-IP-CIDR,172.110.32.0/21,no-resolve
-IP-CIDR,196.55.216.167/32,no-resolve
-IP-CIDR,216.73.80.0/20,no-resolve
-IP-CIDR,5.28.192.0/18,no-resolve
-IP-CIDR,91.108.0.0/16,no-resolve
-PROCESS-NAME,nekox.messenger
-PROCESS-NAME,org.telegram.messenger
-PROCESS-NAME,telegram-desktop
-PROCESS-NAME,tw.nekomimi.nekogram
-PROCESS-NAME,xyz.nextalone.nagram
-USER-AGENT,*YouTubeMusic*
-USER-AGENT,*com.google.ios.youtubemusic*
-USER-AGENT,*youtube*
-USER-AGENT,YouTube*
-USER-AGENT,YouTubeMusic*
-USER-AGENT,com.google.ios.youtube*
-USER-AGENT,com.google.ios.youtubemusic*
+IP-CIDR6,2001:67c:4e8::/48,no-resolve
+IP-CIDR6,2001:b28:f23c::/47,no-resolve
+IP-CIDR6,2001:b28:f23f::/48,no-resolve
+IP-CIDR6,2620:120:e000::/40,no-resolve
+IP-CIDR6,2a0a:f280::/29,no-resolve
 DOMAIN-SUFFIX,cdn-telegram.org
 DOMAIN-SUFFIX,comments.app
 DOMAIN-SUFFIX,contest.com
@@ -232,12 +218,32 @@ DOMAIN-SUFFIX,youtubekids.com
 DOMAIN-SUFFIX,youtubemobilesupport.com
 DOMAIN-SUFFIX,yt.be
 DOMAIN-SUFFIX,ytimg.com
-DOMAIN,api.imem.app
-DOMAIN,api.swiftgram.app
 DOMAIN-KEYWORD,nicegram
 DOMAIN-KEYWORD,youtube
-IP-CIDR6,2001:67c:4e8::/48,no-resolve
-IP-CIDR6,2001:b28:f23c::/47,no-resolve
-IP-CIDR6,2001:b28:f23f::/48,no-resolve
-IP-CIDR6,2620:120:e000::/40,no-resolve
-IP-CIDR6,2a0a:f280::/29,no-resolve
+DOMAIN,api.imem.app
+DOMAIN,api.swiftgram.app
+IP-CIDR,109.239.140.0/24,no-resolve
+IP-CIDR,139.59.210.98/32,no-resolve
+IP-CIDR,149.154.160.0/20,no-resolve
+IP-CIDR,172.110.32.0/21,no-resolve
+IP-CIDR,196.55.216.167/32,no-resolve
+IP-CIDR,216.73.80.0/20,no-resolve
+IP-CIDR,5.28.192.0/18,no-resolve
+IP-CIDR,91.108.0.0/16,no-resolve
+IP-ASN,211157,no-resolve
+IP-ASN,44907,no-resolve
+IP-ASN,59930,no-resolve
+IP-ASN,62014,no-resolve
+IP-ASN,62041,no-resolve
+USER-AGENT,*YouTubeMusic*
+USER-AGENT,*com.google.ios.youtubemusic*
+USER-AGENT,*youtube*
+USER-AGENT,YouTube*
+USER-AGENT,YouTubeMusic*
+USER-AGENT,com.google.ios.youtube*
+USER-AGENT,com.google.ios.youtubemusic*
+PROCESS-NAME,nekox.messenger
+PROCESS-NAME,org.telegram.messenger
+PROCESS-NAME,telegram-desktop
+PROCESS-NAME,tw.nekomimi.nekogram
+PROCESS-NAME,xyz.nextalone.nagram
