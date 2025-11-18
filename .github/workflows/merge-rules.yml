@@ -16,6 +16,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0  # 获取所有历史记录
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -49,7 +50,7 @@ jobs:
         # 支持的规则类型
         valid_rule_types = {
             'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 
-            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME'
+            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME', 'IP-ASN'
         }
         
         def is_valid_rule(line):
@@ -160,16 +161,27 @@ jobs:
         pip install requests
         python merge_rules.py
         
-    - name: Commit and push if changed
+    - name: Check generated files
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        echo "检查生成的文件:"
+        ls -la china.list proxy.list
+        echo "china.list 行数: $(wc -l < china.list)"
+        echo "proxy.list 行数: $(wc -l < proxy.list)"
         
-        # 检查文件是否有变化
-        if git diff --quiet china.list proxy.list 2>/dev/null; then
-          echo "没有检测到变化"
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # 添加文件到git
+        git add china.list proxy.list
+        
+        # 检查是否有变化
+        if git diff-index --quiet HEAD --; then
+          echo "没有检测到变化，无需提交"
         else
-          git add china.list proxy.list
-          git commit -m "Update rules - China: $(wc -l < china.list) rules, Proxy: $(wc -l < proxy.list) rules - $(date +'%Y-%m-%d %H:%M:%S')"
-          git push
+          echo "检测到变化，准备提交"
+          git commit -m "Auto-update rules: China $(wc -l < china.list) rules, Proxy $(wc -l < proxy.list) rules [$(date +'%Y-%m-%d %H:%M:%S')]"
+          git push origin main
+          echo "提交成功！"
         fi
