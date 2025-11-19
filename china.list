@@ -1,13 +1,12 @@
 # NAME: China Rules
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2025-11-19 03:13:34
+# UPDATED: 2025-11-19 03:15:11
 # SOURCES: 1050 unique rules
 # DOMAIN: 47
 # DOMAIN-KEYWORD: 1
 # DOMAIN-SUFFIX: 1002
 # TOTAL: 1050
 
-DOMAIN-KEYWORD,wise
 DOMAIN-SUFFIX,0kkkkkt.com
 DOMAIN-SUFFIX,10010.cn
 DOMAIN-SUFFIX,10010.com
@@ -1010,6 +1009,7 @@ DOMAIN-SUFFIX,zxyzxy.cn
 DOMAIN-SUFFIX,zzsyh.vip
 DOMAIN-SUFFIX,zztfly.com
 DOMAIN-SUFFIX,zzyi4cf7z8.cn
+DOMAIN-KEYWORD,wise
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
 DOMAIN,app-analytics-services.com
