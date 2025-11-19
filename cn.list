@@ -1,6 +1,8 @@
-# 更新时间：2025年8月17日 16:43
-# 规则优化：本次运行共合并 0 条规则
-# 规则数量：当前共 1051 条规则
+DOMAIN,cndocsys.cn
+DOMAIN,comres.cndocsys.cn
+DOMAIN,ecer-app-api.wsb003.cn
+DOMAIN,ecer-bhv.wsb003.cn
+DOMAIN,license.wsb003.cn
 DOMAIN-SUFFIX,wise.com
 DOMAIN-SUFFIX,transferwise.com
 DOMAIN-KEYWORD,wise
