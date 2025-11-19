@@ -1,6 +1,6 @@
 # NAME: China Rules
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2025-11-19 12:51:42
+# UPDATED: 2025-11-19 13:28:50
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -9,10 +9,14 @@ DOMAIN,app-measurement.com
 DOMAIN,b23.tv
 DOMAIN,cdn-go.cn
 DOMAIN,cip.cc
+DOMAIN,cndocsys.cn
+DOMAIN,comres.cndocsys.cn
 DOMAIN,csdnimg.cn
 DOMAIN,doh.pub
 DOMAIN,dumpapp.com
 DOMAIN,easytomessage.com
+DOMAIN,ecer-app-api.wsb003.cn
+DOMAIN,ecer-bhv.wsb003.cn
 DOMAIN,feixue666.com
 DOMAIN,flowus.cn
 DOMAIN,gantanhao.vip
@@ -29,6 +33,7 @@ DOMAIN,jszyapi.com
 DOMAIN,kelee.one
 DOMAIN,learnywhere.cn
 DOMAIN,lenglengyu.com
+DOMAIN,license.wsb003.cn
 DOMAIN,like996.icu
 DOMAIN,lucky666.cn
 DOMAIN,miot-spec.org
