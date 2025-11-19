@@ -1,6 +1,6 @@
 # NAME: Proxy Rules
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2025-11-19 07:11:33
+# UPDATED: 2025-11-19 12:51:43
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -2690,6 +2690,7 @@ IP-CIDR,139.59.210.98/32,no-resolve
 IP-CIDR,14.102.250.18/31,no-resolve
 IP-CIDR,147.92.128.0/17,no-resolve
 IP-CIDR,149.154.160.0/20,no-resolve
+IP-CIDR,149.154.166.111
 IP-CIDR,157.240.0.0/17,no-resolve
 IP-CIDR,158.85.224.160/27,no-resolve
 IP-CIDR,158.85.46.128/27,no-resolve
