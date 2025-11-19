@@ -1,6 +1,6 @@
 # NAME: China Rules
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2025-11-19 03:17:30
+# UPDATED: 2025-11-19 03:18:00
 # SOURCES: 1050 unique rules
 # DOMAIN: 47
 # DOMAIN-KEYWORD: 1
@@ -8,53 +8,6 @@
 # TOTAL: 1050
 
 DOMAIN-KEYWORD,wise
-DOMAIN,1panel.cn
-DOMAIN,aliys.cn
-DOMAIN,app-analytics-services.com
-DOMAIN,app-measurement.com
-DOMAIN,b23.tv
-DOMAIN,cdn-go.cn
-DOMAIN,cip.cc
-DOMAIN,csdnimg.cn
-DOMAIN,doh.pub
-DOMAIN,dumpapp.com
-DOMAIN,easytomessage.com
-DOMAIN,feixue666.com
-DOMAIN,flowus.cn
-DOMAIN,gantanhao.vip
-DOMAIN,gbox.run
-DOMAIN,gitee.com
-DOMAIN,hbyswx.com
-DOMAIN,hhzyapi.com
-DOMAIN,id6.me
-DOMAIN,iosign.tk
-DOMAIN,ip125.com
-DOMAIN,itvbox.cc
-DOMAIN,jdyyc.cn
-DOMAIN,jszyapi.com
-DOMAIN,kelee.one
-DOMAIN,learnywhere.cn
-DOMAIN,lenglengyu.com
-DOMAIN,like996.icu
-DOMAIN,lucky666.cn
-DOMAIN,miot-spec.org
-DOMAIN,mipay.com
-DOMAIN,nyxz166.cn
-DOMAIN,recaptcha.net
-DOMAIN,rumt-zh.com
-DOMAIN,simhaoka.com
-DOMAIN,sourl.cn
-DOMAIN,tb3.cn
-DOMAIN,u3v.cn
-DOMAIN,uri6.com
-DOMAIN,visa.cn
-DOMAIN,volctrack.com
-DOMAIN,wxaurl.cn
-DOMAIN,xhslink.com
-DOMAIN,xn--uzw362b.shop
-DOMAIN,xueqiu.com
-DOMAIN,yaohuo.me
-DOMAIN,ztvip1.cn
 DOMAIN-SUFFIX,0kkkkkt.com
 DOMAIN-SUFFIX,10010.cn
 DOMAIN-SUFFIX,10010.com
@@ -1057,3 +1010,50 @@ DOMAIN-SUFFIX,zxyzxy.cn
 DOMAIN-SUFFIX,zzsyh.vip
 DOMAIN-SUFFIX,zztfly.com
 DOMAIN-SUFFIX,zzyi4cf7z8.cn
+DOMAIN,1panel.cn
+DOMAIN,aliys.cn
+DOMAIN,app-analytics-services.com
+DOMAIN,app-measurement.com
+DOMAIN,b23.tv
+DOMAIN,cdn-go.cn
+DOMAIN,cip.cc
+DOMAIN,csdnimg.cn
+DOMAIN,doh.pub
+DOMAIN,dumpapp.com
+DOMAIN,easytomessage.com
+DOMAIN,feixue666.com
+DOMAIN,flowus.cn
+DOMAIN,gantanhao.vip
+DOMAIN,gbox.run
+DOMAIN,gitee.com
+DOMAIN,hbyswx.com
+DOMAIN,hhzyapi.com
+DOMAIN,id6.me
+DOMAIN,iosign.tk
+DOMAIN,ip125.com
+DOMAIN,itvbox.cc
+DOMAIN,jdyyc.cn
+DOMAIN,jszyapi.com
+DOMAIN,kelee.one
+DOMAIN,learnywhere.cn
+DOMAIN,lenglengyu.com
+DOMAIN,like996.icu
+DOMAIN,lucky666.cn
+DOMAIN,miot-spec.org
+DOMAIN,mipay.com
+DOMAIN,nyxz166.cn
+DOMAIN,recaptcha.net
+DOMAIN,rumt-zh.com
+DOMAIN,simhaoka.com
+DOMAIN,sourl.cn
+DOMAIN,tb3.cn
+DOMAIN,u3v.cn
+DOMAIN,uri6.com
+DOMAIN,visa.cn
+DOMAIN,volctrack.com
+DOMAIN,wxaurl.cn
+DOMAIN,xhslink.com
+DOMAIN,xn--uzw362b.shop
+DOMAIN,xueqiu.com
+DOMAIN,yaohuo.me
+DOMAIN,ztvip1.cn
