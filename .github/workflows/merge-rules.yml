@@ -11,19 +11,19 @@ jobs:
   merge-rules:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 添加写入权限
-    
+      contents: write
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-        
+        
     - name: Download and merge rules
       run: |
         # 创建合并脚本
@@ -33,7 +33,7 @@ jobs:
         import re
         from urllib.parse import urlparse
         from datetime import datetime
-        
+        
         # 国内规则源列表
         china_rule_sources = [
             "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/cn.list",
@@ -55,12 +55,14 @@ jobs:
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy.list"
             # 在这里添加更多国外规则源URL
         ]
+
+        
         # 支持的规则类型
         valid_rule_types = {
-            'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 
-            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME', 'IP-ASN'
+            'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 
+            'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME'
         }
-        
+        
         def is_valid_rule(line):
             line = line.strip()
             if not line or line.startswith('#'):
@@ -70,7 +72,7 @@ jobs:
                 return False
             rule_type = parts[0].strip()
             return rule_type in valid_rule_types
-        
+        
         def download_rules(url):
             try:
                 print(f"正在下载: {url}")
@@ -80,91 +82,144 @@ jobs:
             except Exception as e:
                 print(f"下载失败 {url}: {e}")
                 return None
-        
+        
+        def normalize_rule(rule):
+            """标准化规则，处理no-resolve参数"""
+            parts = rule.split(',')
+            rule_type = parts[0]
+            rule_value = parts[1]
+            
+            # 如果有no-resolve参数，我们保留它
+            if len(parts) > 2 and 'no-resolve' in parts[2:]:
+                return f"{rule_type},{rule_value},no-resolve"
+            else:
+                return f"{rule_type},{rule_value}"
+        
         def parse_rules(content, source_url):
-            rules = set()
+            """解析规则内容，使用标准化后的规则进行去重"""
+            rules_dict = {}  # 使用字典来去重，key是标准化后的规则
             lines = content.split('\n')
+            
             for line in lines:
                 if is_valid_rule(line):
-                    rule = line.strip()
-                    rules.add(rule)
-            print(f"从 {source_url} 解析出 {len(rules)} 条规则")
-            return rules
-        
+                    # 标准化规则
+                    normalized = normalize_rule(line.strip())
+                    
+                    # 如果这个标准化规则已经存在，检查是否需要保留带no-resolve的版本
+                    if normalized in rules_dict:
+                        existing_rule = rules_dict[normalized]
+                        current_rule = line.strip()
+                        
+                        # 如果新规则有no-resolve而旧规则没有，用新规则替换
+                        if ',no-resolve' in current_rule and ',no-resolve' not in existing_rule:
+                            rules_dict[normalized] = current_rule
+                        # 如果两个都有no-resolve或者都没有，保持原样（使用第一个遇到的）
+                    else:
+                        rules_dict[normalized] = line.strip()
+            
+            print(f"从 {source_url} 解析出 {len(rules_dict)} 条规则")
+            return list(rules_dict.values())
+        
         def generate_rule_file(rules, filename, rule_type):
-            sorted_rules = sorted(rules, key=lambda x: (
-                list(valid_rule_types).index(x.split(',')[0]) if x.split(',')[0] in valid_rule_types else 999,
-                x
-            ))
-            
+            # 按规则类型和值排序
+            def sort_key(rule):
+                parts = rule.split(',')
+                rule_type = parts[0]
+                rule_value = parts[1] if len(parts) > 1 else ""
+                # 按规则类型排序，然后按值排序
+                type_order = list(valid_rule_types).index(rule_type) if rule_type in valid_rule_types else 999
+                return (type_order, rule_value.lower())
+            
+            sorted_rules = sorted(rules, key=sort_key)
+            
+            # 生成合并后的文件
             output_lines = []
+            
+            # 文件头信息
             output_lines.append(f"# NAME: {rule_type} Rules")
             output_lines.append(f"# DESCRIPTION: {rule_type} rules merged from multiple sources")
             output_lines.append(f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
             output_lines.append(f"# SOURCES: {len(rules)} unique rules")
-            
+            
+            # 统计各类型规则数量
             source_count = {}
             for rule in rules:
                 rule_type = rule.split(',')[0]
                 source_count[rule_type] = source_count.get(rule_type, 0) + 1
-            
+            
+            # 添加规则统计
             for rule_type in sorted(valid_rule_types):
                 if rule_type in source_count:
                     output_lines.append(f"# {rule_type}: {source_count[rule_type]}")
-            
+            
             output_lines.append(f"# TOTAL: {len(sorted_rules)}")
             output_lines.append("")
+            
+            # 添加规则内容
             output_lines.extend(sorted_rules)
-            
+            
+            # 写入文件
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write('\n'.join(output_lines))
-            
+            
             print(f"{rule_type} 规则生成完成！总共 {len(sorted_rules)} 条规则")
-        
+        
         # 处理国内规则
         print("=== 开始处理国内规则 ===")
-        china_rules = set()
+        china_rules = []
         for source_url in china_rule_sources:
             content = download_rules(source_url)
             if content:
                 rules = parse_rules(content, source_url)
-                china_rules.update(rules)
-        
+                # 合并时再次去重
+                for rule in rules:
+                    normalized = normalize_rule(rule)
+                    if normalized not in [normalize_rule(r) for r in china_rules]:
+                        china_rules.append(rule)
+        
+        print(f"国内规则去重后: {len(china_rules)} 条")
         generate_rule_file(china_rules, 'china.list', 'China')
-        
+        
         # 处理国外规则
         print("=== 开始处理国外规则 ===")
-        proxy_rules = set()
+        proxy_rules = []
         for source_url in proxy_rule_sources:
             content = download_rules(source_url)
             if content:
                 rules = parse_rules(content, source_url)
-                proxy_rules.update(rules)
-        
+                # 合并时再次去重
+                for rule in rules:
+                    normalized = normalize_rule(rule)
+                    if normalized not in [normalize_rule(r) for r in proxy_rules]:
+                        proxy_rules.append(rule)
+        
+        print(f"国外规则去重后: {len(proxy_rules)} 条")
         generate_rule_file(proxy_rules, 'proxy.list', 'Proxy')
-        
+        
         print("所有规则处理完成！")
         EOF
-        
+        
         pip install requests
         python merge_rules.py
-        
+        
     - name: Check generated files
       run: |
         echo "检查生成的文件:"
         ls -la china.list proxy.list
-        echo "china.list 前5行:"
-        head -5 china.list
-        echo "proxy.list 前5行:"
-        head -5 proxy.list
-        
+        echo "china.list 行数: $(wc -l < china.list)"
+        echo "proxy.list 行数: $(wc -l < proxy.list)"
+        echo "检查去重效果 - 国内规则中IP-CIDR6示例:"
+        grep "^IP-CIDR6" china.list | head -10
+        echo "检查去重效果 - 国外规则中IP-CIDR6示例:"
+        grep "^IP-CIDR6" proxy.list | head -10
+        
     - name: Commit and push changes
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        
+        
         git add china.list proxy.list
-        
+        
         if git diff --staged --quiet; then
           echo "没有检测到变化"
         else
