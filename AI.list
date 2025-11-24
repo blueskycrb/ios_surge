@@ -37,3 +37,11 @@ DOMAIN-SUFFIX, grazie.aws.intellij.net
 # Meta
 DOMAIN, imagine.meta.com
 DOMAIN-SUFFIX, meta.ai
+
+
+DOMAIN-SUFFIX,scispace.com
+DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,gamma.app
+DOMAIN-SUFFIX,notebooklm.google.com
+DOMAIN-SUFFIX,elicit.com
+
