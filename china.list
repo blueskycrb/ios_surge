@@ -1,6 +1,6 @@
 # NAME: China Rules
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2025-12-07 01:26:18
+# UPDATED: 2025-12-07 23:39:39
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -411,6 +411,8 @@ DOMAIN-SUFFIX,fengkongcloud.com
 DOMAIN-SUFFIX,ffquan.cn
 DOMAIN-SUFFIX,fibodata.com
 DOMAIN-SUFFIX,flowus.cn
+DOMAIN-SUFFIX,fnnas.cn
+DOMAIN-SUFFIX,fnnas.com
 DOMAIN-SUFFIX,fodexin.com
 DOMAIN-SUFFIX,fonts.googleapis.com
 DOMAIN-SUFFIX,fraudmetrix.cn

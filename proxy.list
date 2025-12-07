@@ -1,6 +1,6 @@
 # NAME: Proxy Rules
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2025-12-07 01:26:19
+# UPDATED: 2025-12-07 23:39:40
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -504,6 +504,7 @@ DOMAIN-SUFFIX,bytedapm.com
 DOMAIN-SUFFIX,bytegecko-i18n.com
 DOMAIN-SUFFIX,byteintlapi.com
 DOMAIN-SUFFIX,byteoversea.com
+DOMAIN-SUFFIX,c.gle
 DOMAIN-SUFFIX,cambridge.org
 DOMAIN-SUFFIX,camo.githubusercontent.com
 DOMAIN-SUFFIX,campuslondon.com
