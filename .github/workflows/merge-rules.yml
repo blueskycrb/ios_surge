@@ -74,6 +74,7 @@ jobs:
           def dedupe_no_resolve_priority(rules):
               base_map = {}
               for rule in rules:
+                  rule = format_ip_cidr(rule)  # 格式化 IP-CIDR 规则
                   parts = rule.split(',')
                   if len(parts) < 2:
                       continue
@@ -89,6 +90,20 @@ jobs:
                           base_map[base_key] = rule
 
               return set(base_map.values())
+
+          def format_ip_cidr(rule):
+              """确保 IP-CIDR 规则的格式正确"""
+              parts = rule.split(',')
+              if len(parts) < 2:
+                  return rule  # 不是有效规则，直接返回
+              rule_type = parts[0].strip()
+              value = parts[1].strip()
+
+              # 对 IP-CIDR 进行格式化，如果是单个 IP，添加 /32 后缀
+              if rule_type == 'IP-CIDR' and '/' not in value:
+                  value = f"{value}/32"  # 添加 /32 后缀
+
+              return f"{rule_type},{value}"
 
           def download_rules(url):
               try:
