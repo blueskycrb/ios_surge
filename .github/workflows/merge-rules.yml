@@ -58,7 +58,7 @@ jobs:
           # 支持的规则类型
           valid_rule_types = {
               'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD',
-              'IP-CIDR', 'IP-CIDR6', 'USER-AGENT', 'PROCESS-NAME', 'IP-ASN'
+              'IP-CIDR', 'IP-CIDR6', 'PROCESS-NAME'
           }
 
           def is_valid_rule(line):
@@ -126,14 +126,14 @@ jobs:
 
               # 国内规则加入 ,DIRECT
               for rule in china_rules:
-                  if rule.startswith('USER-AGENT'):
-                      continue  # 不处理 USER-AGENT 规则
+                  if rule.startswith('USER-AGENT') or rule.startswith('IP-ASN'):
+                      continue  # 不处理 USER-AGENT 和 IP-ASN 规则
                   mihomo_rules.append(f"{rule},DIRECT")
 
               # 国外规则加入 ,Proxy
               for rule in proxy_rules:
-                  if rule.startswith('USER-AGENT'):
-                      continue  # 不处理 USER-AGENT 规则
+                  if rule.startswith('USER-AGENT') or rule.startswith('IP-ASN'):
+                      continue  # 不处理 USER-AGENT 和 IP-ASN 规则
                   mihomo_rules.append(f"{rule},Proxy")
 
               # 合并国内和国外规则，保存为 mihomo.list
