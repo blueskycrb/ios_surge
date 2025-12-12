@@ -83,7 +83,7 @@ jobs:
                   base_key = f"{rule_type},{value}"
 
                   if rule.endswith("no-resolve"):
-                      base_map[base_key] = rule
+                      base_map[base_key] = rule.replace("no-resolve", "Proxy")  # 将no-resolve替换为Proxy
                   else:
                       if base_key not in base_map:
                           base_map[base_key] = rule
