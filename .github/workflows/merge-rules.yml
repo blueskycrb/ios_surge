@@ -50,7 +50,9 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Instagram/Instagram.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Facebook/Facebook.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/PayPal/PayPal.list",
-              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy.list"
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy.list",
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Epic/Epic.list",
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list"
           ]
 
           # 支持的规则类型
@@ -119,6 +121,20 @@ jobs:
                   f.write("\n".join(output_lines))
               print(f"{rule_type} 规则生成完成！总共 {len(sorted_rules)} 条规则")
 
+          # ⭐ 生成 Mihomo 格式的文件
+          def generate_mihomo_format(rules, filename, is_china=True):
+              formatted_rules = []
+              suffix = 'DIRECT' if is_china else 'Proxy'
+              for rule in rules:
+                  parts = rule.split(',')
+                  if len(parts) >= 2:
+                      formatted_rules.append(f"{parts[0]},{parts[1]},{suffix}")
+              with open(filename, 'w', encoding='utf-8') as f:
+                  f.write("rules:\n")
+                  for rule in formatted_rules:
+                      f.write(f"  - {rule}\n")
+              print(f"Mihomo 格式规则生成完成！文件名: {filename}, 总共 {len(formatted_rules)} 条规则")
+
           # 处理国内规则
           print("=== 开始处理国内规则 ===")
           china_rules = set()
@@ -130,7 +146,11 @@ jobs:
           # ⭐ 加入去重
           china_rules = dedupe_no_resolve_priority(china_rules)
 
+          # 生成标准规则文件
           generate_rule_file(china_rules, 'china.list', 'China')
+
+          # 生成 Mihomo 格式文件
+          generate_mihomo_format(china_rules, 'china_mihomo.list', is_china=True)
 
           # 处理国外规则
           print("=== 开始处理国外规则 ===")
@@ -143,7 +163,11 @@ jobs:
           # ⭐ 加入去重
           proxy_rules = dedupe_no_resolve_priority(proxy_rules)
 
+          # 生成标准规则文件
           generate_rule_file(proxy_rules, 'proxy.list', 'Proxy')
+
+          # 生成 Mihomo 格式文件
+          generate_mihomo_format(proxy_rules, 'proxy_mihomo.list', is_china=False)
 
           print("所有规则处理完成！")
           EOF
@@ -154,15 +178,17 @@ jobs:
       - name: Check generated files
         run: |
           echo "检查生成的文件:"
-          ls -la china.list proxy.list
+          ls -la china.list proxy.list china_mihomo.list proxy_mihomo.list
           head -5 china.list
           head -5 proxy.list
+          head -5 china_mihomo.list
+          head -5 proxy_mihomo.list
 
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add china.list proxy.list
+          git add china.list proxy.list china_mihomo.list proxy_mihomo.list
           if git diff --staged --quiet; then
             echo "没有检测到变化"
           else
