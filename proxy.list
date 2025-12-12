@@ -1,6 +1,6 @@
 # NAME: Proxy Rules
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2025-12-12 01:21:18
+# UPDATED: 2025-12-12 12:17:05
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -183,6 +183,9 @@ DOMAIN-KEYWORD,recaptcha
 DOMAIN-KEYWORD,sci-hub
 DOMAIN-KEYWORD,skydrive
 DOMAIN-KEYWORD,spotify
+DOMAIN-KEYWORD,steambroadcast
+DOMAIN-KEYWORD,steamstore
+DOMAIN-KEYWORD,steamuserimages
 DOMAIN-KEYWORD,telegram
 DOMAIN-KEYWORD,tiktok
 DOMAIN-KEYWORD,ttvnw
@@ -356,6 +359,7 @@ DOMAIN-SUFFIX,bajiecaiji.com
 DOMAIN-SUFFIX,bandpage.com
 DOMAIN-SUFFIX,baselinestudy.com
 DOMAIN-SUFFIX,baselinestudy.org
+DOMAIN-SUFFIX,battlebreakers.com
 DOMAIN-SUFFIX,bazel.build
 DOMAIN-SUFFIX,bcdef.vip
 DOMAIN-SUFFIX,bdn.dev
@@ -520,7 +524,10 @@ DOMAIN-SUFFIX,cashify.com
 DOMAIN-SUFFIX,cashify.net
 DOMAIN-SUFFIX,catbox.moe
 DOMAIN-SUFFIX,catvod.com
+DOMAIN-SUFFIX,cdn-ali.content.steamchina.com
+DOMAIN-SUFFIX,cdn-qc.content.steamchina.com
 DOMAIN-SUFFIX,cdn-telegram.org
+DOMAIN-SUFFIX,cdn-ws.content.steamchina.com
 DOMAIN-SUFFIX,cdninstagram.com
 DOMAIN-SUFFIX,cdnlz22.com
 DOMAIN-SUFFIX,cdnst.net
@@ -604,6 +611,7 @@ DOMAIN-SUFFIX,crowdtangle.com
 DOMAIN-SUFFIX,crr.com
 DOMAIN-SUFFIX,crrev.com
 DOMAIN-SUFFIX,cs4hs.com
+DOMAIN-SUFFIX,csgo.wmsj.cn
 DOMAIN-SUFFIX,ctcsci.com
 DOMAIN-SUFFIX,ctm.net
 DOMAIN-SUFFIX,curtin.top
@@ -642,9 +650,12 @@ DOMAIN-SUFFIX,dious.cc
 DOMAIN-SUFFIX,discordapp.com
 DOMAIN-SUFFIX,discordapp.net
 DOMAIN-SUFFIX,dj0898.com
+DOMAIN-SUFFIX,dl.steam.clngaa.com
+DOMAIN-SUFFIX,dl.steam.ksyna.com
 DOMAIN-SUFFIX,dlfacebook.com
 DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,donato-fiore.github.io
+DOMAIN-SUFFIX,dota2.wmsj.cn
 DOMAIN-SUFFIX,dotfacebook.com
 DOMAIN-SUFFIX,dotfacebook.net
 DOMAIN-SUFFIX,doubleclick-cn.net
@@ -660,16 +671,22 @@ DOMAIN-SUFFIX,duiadns.net
 DOMAIN-SUFFIX,dxcool223-repo.github.io
 DOMAIN-SUFFIX,dy066.com
 DOMAIN-SUFFIX,dyneti.com
+DOMAIN-SUFFIX,eac-cdn.com
+DOMAIN-SUFFIX,easy.ac
+DOMAIN-SUFFIX,easyanticheat.net
 DOMAIN-SUFFIX,easygujaratityping.com
 DOMAIN-SUFFIX,easyonlinetyping.com
 DOMAIN-SUFFIX,edge-conumer-static.azureedge.net
 DOMAIN-SUFFIX,edge-mobile-static.azureedge.net
+DOMAIN-SUFFIX,edge.steam-dns.top.comcast.net
 DOMAIN-SUFFIX,ejj00rgti1.xin
 DOMAIN-SUFFIX,ekiga.net
 DOMAIN-SUFFIX,elihwyma.github.io
 DOMAIN-SUFFIX,en25.com
 DOMAIN-SUFFIX,enmity.app
 DOMAIN-SUFFIX,epic.network
+DOMAIN-SUFFIX,epicgames.com
+DOMAIN-SUFFIX,epicgames.dev
 DOMAIN-SUFFIX,episodic.com
 DOMAIN-SUFFIX,essl-cdxs.edgekey.net
 DOMAIN-SUFFIX,ethicalads.io
@@ -679,6 +696,7 @@ DOMAIN-SUFFIX,excathedra.co
 DOMAIN-SUFFIX,experiencebillmelater.com
 DOMAIN-SUFFIX,expo.dev
 DOMAIN-SUFFIX,expresswifi.com
+DOMAIN-SUFFIX,f3b7q2p3.ssl.hwcdn.net
 DOMAIN-SUFFIX,f8.com
 DOMAIN-SUFFIX,faacebok.com
 DOMAIN-SUFFIX,faacebook.com
@@ -927,6 +945,7 @@ DOMAIN-SUFFIX,faecebok.com
 DOMAIN-SUFFIX,faesebook.com
 DOMAIN-SUFFIX,fafacebook.com
 DOMAIN-SUFFIX,faicbooc.com
+DOMAIN-SUFFIX,fanatical.com
 DOMAIN-SUFFIX,fasebokk.com
 DOMAIN-SUFFIX,fasebook.com
 DOMAIN-SUFFIX,faseboox.com
@@ -1030,6 +1049,7 @@ DOMAIN-SUFFIX,follow.is
 DOMAIN-SUFFIX,fontawesome.com
 DOMAIN-SUFFIX,fontplus.jp
 DOMAIN-SUFFIX,foofle.com
+DOMAIN-SUFFIX,fortnite.com
 DOMAIN-SUFFIX,fosebook.com
 DOMAIN-SUFFIX,fouadraheb.com
 DOMAIN-SUFFIX,fpacebook.com
@@ -1431,6 +1451,7 @@ DOMAIN-SUFFIX,hearse.lol
 DOMAIN-SUFFIX,hearsedev.github.io
 DOMAIN-SUFFIX,heimuer.tv
 DOMAIN-SUFFIX,heimuer.xyz
+DOMAIN-SUFFIX,helpshift.com
 DOMAIN-SUFFIX,henghengmao.com
 DOMAIN-SUFFIX,hey.gle
 DOMAIN-SUFFIX,hhuus.com
@@ -1457,6 +1478,7 @@ DOMAIN-SUFFIX,httpsfacebook.com
 DOMAIN-SUFFIX,httpwwwfacebook.com
 DOMAIN-SUFFIX,huami1314.github.io
 DOMAIN-SUFFIX,huishij.com
+DOMAIN-SUFFIX,humblebundle.com
 DOMAIN-SUFFIX,huoying666.com
 DOMAIN-SUFFIX,huyaapi.com
 DOMAIN-SUFFIX,hwgo.com
@@ -1803,6 +1825,7 @@ DOMAIN-SUFFIX,paisseon.github.io
 DOMAIN-SUFFIX,palera.in
 DOMAIN-SUFFIX,pan-8os.pages.dev
 DOMAIN-SUFFIX,panoramio.com
+DOMAIN-SUFFIX,paragon.com
 DOMAIN-SUFFIX,parse.com
 DOMAIN-SUFFIX,partylikeits1986.org
 DOMAIN-SUFFIX,passbox-pa.googleapis.com
@@ -1983,6 +2006,8 @@ DOMAIN-SUFFIX,pixate.com
 DOMAIN-SUFFIX,pixhost.to
 DOMAIN-SUFFIX,pki.goog
 DOMAIN-SUFFIX,play.googleapis.com
+DOMAIN-SUFFIX,playartifact.com
+DOMAIN-SUFFIX,playparagon.com
 DOMAIN-SUFFIX,ploosh.dev
 DOMAIN-SUFFIX,plus.codes
 DOMAIN-SUFFIX,pndsn.com
@@ -2068,6 +2093,7 @@ DOMAIN-SUFFIX,revolv.com
 DOMAIN-SUFFIX,ridepenguin.com
 DOMAIN-SUFFIX,rixtelecom.se
 DOMAIN-SUFFIX,rob311.com
+DOMAIN-SUFFIX,roborecall.com
 DOMAIN-SUFFIX,rocksdb.com
 DOMAIN-SUFFIX,rocksdb.net
 DOMAIN-SUFFIX,rocksdb.org
@@ -2080,6 +2106,7 @@ DOMAIN-SUFFIX,run.app
 DOMAIN-SUFFIX,ry-pic.com
 DOMAIN-SUFFIX,rycjapi.com
 DOMAIN-SUFFIX,s-xoom.com
+DOMAIN-SUFFIX,s.team
 DOMAIN-SUFFIX,s81c.com
 DOMAIN-SUFFIX,sa.net
 DOMAIN-SUFFIX,saasexch.com
@@ -2115,6 +2142,7 @@ DOMAIN-SUFFIX,serv00.net
 DOMAIN-SUFFIX,servarica.com
 DOMAIN-SUFFIX,serveteck.com
 DOMAIN-SUFFIX,sgpstatp.com
+DOMAIN-SUFFIX,shadowcomplex.com
 DOMAIN-SUFFIX,sharethis.com
 DOMAIN-SUFFIX,sharethrough.com
 DOMAIN-SUFFIX,sharethru.com
@@ -2154,9 +2182,13 @@ DOMAIN-SUFFIX,sportstream.com
 DOMAIN-SUFFIX,spotify.com
 DOMAIN-SUFFIX,spotifycdn.com
 DOMAIN-SUFFIX,sprig.com
+DOMAIN-SUFFIX,spyjinx.com
 DOMAIN-SUFFIX,squidforce.eu.org
 DOMAIN-SUFFIX,ss2.us
 DOMAIN-SUFFIX,sslpaypal.org
+DOMAIN-SUFFIX,st.dl.bscstorage.net
+DOMAIN-SUFFIX,st.dl.eccdnx.com
+DOMAIN-SUFFIX,st.dl.pinyuncloud.com
 DOMAIN-SUFFIX,stadia.dev
 DOMAIN-SUFFIX,staging-controlbe.floonet.goog
 DOMAIN-SUFFIX,staging-databe.floonet.goog
@@ -2165,8 +2197,38 @@ DOMAIN-SUFFIX,staticfile.org
 DOMAIN-SUFFIX,stcroixmosquito.com
 DOMAIN-SUFFIX,stcroixmosquitoproject.com
 DOMAIN-SUFFIX,stdio.be
+DOMAIN-SUFFIX,steam-api.com
+DOMAIN-SUFFIX,steam-chat.com
+DOMAIN-SUFFIX,steam.apac.qtlglb.com
+DOMAIN-SUFFIX,steam.cdn.on.net
+DOMAIN-SUFFIX,steam.cdn.orcon.net.nz
+DOMAIN-SUFFIX,steam.cdn.slingshot.co.nz
+DOMAIN-SUFFIX,steam.cdn.webra.ru
+DOMAIN-SUFFIX,steam.eca.qtlglb.com
+DOMAIN-SUFFIX,steam.naeu.qtlglb.com
+DOMAIN-SUFFIX,steam.ru.qtlglb.com
+DOMAIN-SUFFIX,steam.tv
+DOMAIN-SUFFIX,steambroadcast.akamaized.net
+DOMAIN-SUFFIX,steamcdn-a.akamaihd.net
+DOMAIN-SUFFIX,steamcommunity-a.akamaihd.net
+DOMAIN-SUFFIX,steamcommunity.com
+DOMAIN-SUFFIX,steamcontent.tnkjmec.com
+DOMAIN-SUFFIX,steamdeck.com
+DOMAIN-SUFFIX,steamgames.com
+DOMAIN-SUFFIX,steammobile.akamaized.net
+DOMAIN-SUFFIX,steampipe-kr.akamaized.net
+DOMAIN-SUFFIX,steampipe-partner.akamaized.net
+DOMAIN-SUFFIX,steampipe.akamaized.net
 DOMAIN-SUFFIX,steampowered.com
+DOMAIN-SUFFIX,steampowered.com.8686c.com
+DOMAIN-SUFFIX,steamstat.us
 DOMAIN-SUFFIX,steamstatic.com
+DOMAIN-SUFFIX,steamstatic.com.8686c.com
+DOMAIN-SUFFIX,steamstore-a.akamaihd.net
+DOMAIN-SUFFIX,steamunlocked.net
+DOMAIN-SUFFIX,steamusercontent-a.akamaihd.net
+DOMAIN-SUFFIX,steamuserimages-a.akamaihd.net
+DOMAIN-SUFFIX,steamvideo-a.akamaihd.net
 DOMAIN-SUFFIX,steffann.nl
 DOMAIN-SUFFIX,stel.com
 DOMAIN-SUFFIX,stripe.com
@@ -2295,9 +2357,12 @@ DOMAIN-SUFFIX,ugly-soul.github.io
 DOMAIN-SUFFIX,ukuapi.com
 DOMAIN-SUFFIX,umami.dev
 DOMAIN-SUFFIX,umd.edu
+DOMAIN-SUFFIX,underlords.com
 DOMAIN-SUFFIX,unfiltered.news
 DOMAIN-SUFFIX,unibots.in
 DOMAIN-SUFFIX,unisvg.com
+DOMAIN-SUFFIX,unrealengine.com
+DOMAIN-SUFFIX,unrealtournament.com
 DOMAIN-SUFFIX,urchin.com
 DOMAIN-SUFFIX,useplannr.com
 DOMAIN-SUFFIX,usercontent.dev
@@ -2311,6 +2376,7 @@ DOMAIN-SUFFIX,uzplay.fun
 DOMAIN-SUFFIX,v2ex.com
 DOMAIN-SUFFIX,v8.dev
 DOMAIN-SUFFIX,v8project.org
+DOMAIN-SUFFIX,valvesoftware.com
 DOMAIN-SUFFIX,vegrecipesofindia.com
 DOMAIN-SUFFIX,velostrata.com
 DOMAIN-SUFFIX,venmo-touch.com
@@ -2382,6 +2448,7 @@ DOMAIN-SUFFIX,withgoogle.com
 DOMAIN-SUFFIX,withyoutube.com
 DOMAIN-SUFFIX,wlcdn99.com
 DOMAIN-SUFFIX,wlongimg.com
+DOMAIN-SUFFIX,wmsjsteam.com
 DOMAIN-SUFFIX,wogg.net
 DOMAIN-SUFFIX,wolongzyw.com
 DOMAIN-SUFFIX,womenwill.com
