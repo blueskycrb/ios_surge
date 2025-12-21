@@ -26,7 +26,6 @@ jobs:
 
       - name: Download and merge rules
         run: |
-          # 创建合并脚本
           cat > merge_rules.py << 'EOF'
           #!/usr/bin/env python3
           import requests
@@ -57,52 +56,78 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list"
           ]
 
-          # ✅ AI 规则源列表（你把链接放这里）
+          # AI 规则源列表（你把自己的 AI 链接放这里）
           ai_rule_sources = [
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Copilot/Copilot.list",
               "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/AI.list"
           ]
 
-          # mihomo 里 AI 分类默认走哪个策略组：
-          # - 如果你 mihomo 配置里有策略组名叫 AI，就保持 "AI"
-          # - 如果你不想单独分组，改成 "Proxy"
+
+          # mihomo 里 AI 分类默认走哪个策略组名：
+          # 1) 你 mihomo 配置里有策略组叫 AI -> 保持 "AI"
+          # 2) 不想单独分组 -> 改成 "Proxy"
           AI_POLICY = "AI"
 
-          # 支持的规则类型（Loon/Surge 常见 + IP-ASN/USER-AGENT 也保留到 .list 里）
+          # 支持的规则类型（Loon/Surge 常见）
           valid_rule_types = {
               "DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD",
               "IP-CIDR", "IP-CIDR6", "PROCESS-NAME",
               "IP-ASN", "USER-AGENT"
           }
 
-          def is_valid_rule(token: str) -> bool:
-              token = token.strip()
-              if not token or token.startswith("#"):
+          def is_valid_rule(line: str) -> bool:
+              line = (line or "").strip()
+              if not line or line.startswith("#"):
                   return False
-              parts = token.split(",")
+
+              # 去掉行内注释：DOMAIN,xxx # comment
+              if "#" in line:
+                  line = line.split("#", 1)[0].strip()
+                  if not line:
+                      return False
+
+              parts = [p.strip() for p in line.split(",")]
               if len(parts) < 2:
                   return False
-              return parts[0].strip() in valid_rule_types
+
+              rule_type = parts[0]
+              value = parts[1]
+
+              # ✅ 关键修复：第二列不能为空（否则会出现 DOMAIN, / IP-CIDR, 等垃圾规则）
+              if rule_type not in valid_rule_types or not value:
+                  return False
+
+              # 可选加强：IP-ASN 必须是纯数字，避免 IP-ASN, 这种
+              if rule_type == "IP-ASN" and not value.isdigit():
+                  return False
+
+              return True
 
           def has_no_resolve(rule: str) -> bool:
               parts = [p.strip() for p in rule.split(",")]
               return any(p == "no-resolve" for p in parts[2:])
 
-          def format_ip_cidr(rule: str) -> str:
-              """确保 IP-CIDR 单个 IP 会补 /32，同时保留 no-resolve 等额外字段"""
-              parts = [p.strip() for p in rule.split(",")]
+          def format_ip_cidr(rule: str):
+              """
+              确保 IP-CIDR 单个 IP 会补 /32，同时保留 no-resolve 等额外字段
+              遇到 value 为空直接返回 None（避免产生 IP-CIDR,/32 这种错误）
+              """
+              parts = [p.strip() for p in (rule or "").split(",")]
               if len(parts) < 2:
-                  return rule
+                  return None
 
               rule_type = parts[0]
               value = parts[1]
               extra = parts[2:]
 
+              # ✅ value 为空直接丢弃
+              if not rule_type or not value:
+                  return None
+
               if rule_type == "IP-CIDR" and "/" not in value:
                   value = f"{value}/32"
 
-              # 重新拼回去，保留 extra
               out = [rule_type, value] + extra
               return ",".join(out)
 
@@ -110,18 +135,23 @@ jobs:
           def dedupe_no_resolve_priority(rules):
               base_map = {}
               for raw in rules:
-                  rule = format_ip_cidr(raw)
+                  formatted = format_ip_cidr(raw)
+                  if not formatted:
+                      continue
+                  rule = formatted
+
                   parts = [p.strip() for p in rule.split(",")]
                   if len(parts) < 2:
                       continue
-                  base_key = f"{parts[0]},{parts[1]}"
 
+                  base_key = f"{parts[0]},{parts[1]}"
                   cur = base_map.get(base_key)
                   if cur is None:
                       base_map[base_key] = rule
                   else:
                       if (not has_no_resolve(cur)) and has_no_resolve(rule):
                           base_map[base_key] = rule
+
               return set(base_map.values())
 
           def download_rules(url: str):
@@ -135,11 +165,25 @@ jobs:
                   return None
 
           def parse_rules(content: str, source_url: str):
+              """
+              兼容：
+              - 正常按行规则
+              - 偶尔出现“一行塞多条”的情况（用空白切开）
+              同时依赖 is_valid_rule 过滤空 value 垃圾规则
+              """
               rules = set()
-              # ✅ 兼容“整份文件被压成一行”的情况：按任意空白切分（空格/换行/Tab）
-              for token in content.replace("\r", "\n").split():
-                  if is_valid_rule(token):
-                      rules.add(token.strip())
+              content = (content or "").replace("\r", "\n")
+
+              for raw_line in content.split("\n"):
+                  line = raw_line.strip()
+                  if not line or line.startswith("#"):
+                      continue
+
+                  # 一行里可能塞了多个规则，用空白拆开逐个判断
+                  for token in line.split():
+                      if is_valid_rule(token):
+                          rules.add(token.strip())
+
               print(f"从 {source_url} 解析出 {len(rules)} 条规则")
               return rules
 
@@ -159,7 +203,7 @@ jobs:
           def to_mihomo_rule(rule: str, policy: str) -> str:
               """
               mihomo 规则格式：TYPE,ARGUMENT,POLICY(,no-resolve)
-              这里只处理你名单里常见的：TYPE,VALUE[,no-resolve]
+              输入通常是：TYPE,VALUE[,no-resolve]
               """
               parts = [p.strip() for p in rule.split(",")]
               if len(parts) < 2:
@@ -170,8 +214,10 @@ jobs:
               extra = parts[2:]
               nr = any(p == "no-resolve" for p in extra)
 
+              if not rule_type or not value:
+                  return ""
+
               out = f"{rule_type},{value},{policy}"
-              # 只有 target IP 相关规则才需要 no-resolve，这里按原字段带没带来决定
               if nr:
                   out += ",no-resolve"
               return out
@@ -183,21 +229,25 @@ jobs:
               for rule in china_rules:
                   if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
                       continue
-                  mihomo_rules.append(to_mihomo_rule(rule, "DIRECT"))
+                  r = to_mihomo_rule(rule, "DIRECT")
+                  if r:
+                      mihomo_rules.append(r)
 
               # 国外：Proxy
               for rule in proxy_rules:
                   if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
                       continue
-                  mihomo_rules.append(to_mihomo_rule(rule, "Proxy"))
+                  r = to_mihomo_rule(rule, "Proxy")
+                  if r:
+                      mihomo_rules.append(r)
 
               # AI：AI_POLICY（默认 AI，可改 Proxy）
               for rule in ai_rules:
                   if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
                       continue
-                  mihomo_rules.append(to_mihomo_rule(rule, AI_POLICY))
-
-              mihomo_rules = [r for r in mihomo_rules if r]
+                  r = to_mihomo_rule(rule, AI_POLICY)
+                  if r:
+                      mihomo_rules.append(r)
 
               with open("mihomo.list", "w", encoding="utf-8") as f:
                   f.write("rules:\n")
@@ -241,7 +291,8 @@ jobs:
           print("所有规则处理完成！")
           EOF
 
-          pip install requests
+          python -m pip install -U pip
+          python -m pip install requests
           python merge_rules.py
 
       - name: Check generated files
