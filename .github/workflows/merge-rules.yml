@@ -57,139 +57,187 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list"
           ]
 
-          # 支持的规则类型
+          # ✅ AI 规则源列表（你把链接放这里）
+          ai_rule_sources = [
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Copilot/Copilot.list",
+              "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/AI.list"
+          ]
+
+          # mihomo 里 AI 分类默认走哪个策略组：
+          # - 如果你 mihomo 配置里有策略组名叫 AI，就保持 "AI"
+          # - 如果你不想单独分组，改成 "Proxy"
+          AI_POLICY = "AI"
+
+          # 支持的规则类型（Loon/Surge 常见 + IP-ASN/USER-AGENT 也保留到 .list 里）
           valid_rule_types = {
-              'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD',
-              'IP-CIDR', 'IP-CIDR6', 'PROCESS-NAME'
+              "DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD",
+              "IP-CIDR", "IP-CIDR6", "PROCESS-NAME",
+              "IP-ASN", "USER-AGENT"
           }
 
-          def is_valid_rule(line):
-              line = line.strip()
-              if not line or line.startswith('#'):
+          def is_valid_rule(token: str) -> bool:
+              token = token.strip()
+              if not token or token.startswith("#"):
                   return False
-              parts = line.split(',')
+              parts = token.split(",")
               if len(parts) < 2:
                   return False
               return parts[0].strip() in valid_rule_types
 
-          # ⭐ no-resolve 优先去重
+          def has_no_resolve(rule: str) -> bool:
+              parts = [p.strip() for p in rule.split(",")]
+              return any(p == "no-resolve" for p in parts[2:])
+
+          def format_ip_cidr(rule: str) -> str:
+              """确保 IP-CIDR 单个 IP 会补 /32，同时保留 no-resolve 等额外字段"""
+              parts = [p.strip() for p in rule.split(",")]
+              if len(parts) < 2:
+                  return rule
+
+              rule_type = parts[0]
+              value = parts[1]
+              extra = parts[2:]
+
+              if rule_type == "IP-CIDR" and "/" not in value:
+                  value = f"{value}/32"
+
+              # 重新拼回去，保留 extra
+              out = [rule_type, value] + extra
+              return ",".join(out)
+
+          # ⭐ no-resolve 优先去重：同一个 (TYPE,VALUE) 同时存在时，优先保留带 no-resolve 的那条
           def dedupe_no_resolve_priority(rules):
               base_map = {}
-              for rule in rules:
-                  rule = format_ip_cidr(rule)  # 格式化 IP-CIDR 规则
-                  parts = rule.split(',')
+              for raw in rules:
+                  rule = format_ip_cidr(raw)
+                  parts = [p.strip() for p in rule.split(",")]
                   if len(parts) < 2:
                       continue
+                  base_key = f"{parts[0]},{parts[1]}"
 
-                  rule_type = parts[0].strip()
-                  value = parts[1].strip()
-                  base_key = f"{rule_type},{value}"
-
-                  if rule.endswith("no-resolve"):
-                      base_map[base_key] = rule.replace("no-resolve", "Proxy")  # 将no-resolve替换为Proxy
+                  cur = base_map.get(base_key)
+                  if cur is None:
+                      base_map[base_key] = rule
                   else:
-                      if base_key not in base_map:
+                      if (not has_no_resolve(cur)) and has_no_resolve(rule):
                           base_map[base_key] = rule
-
               return set(base_map.values())
 
-          def format_ip_cidr(rule):
-              """确保 IP-CIDR 规则的格式正确"""
-              parts = rule.split(',')
-              if len(parts) < 2:
-                  return rule  # 不是有效规则，直接返回
-              rule_type = parts[0].strip()
-              value = parts[1].strip()
-
-              # 对 IP-CIDR 进行格式化，如果是单个 IP，添加 /32 后缀
-              if rule_type == 'IP-CIDR' and '/' not in value:
-                  value = f"{value}/32"  # 添加 /32 后缀
-
-              return f"{rule_type},{value}"
-
-          def download_rules(url):
+          def download_rules(url: str):
               try:
                   print(f"正在下载: {url}")
-                  response = requests.get(url, timeout=30)
-                  response.raise_for_status()
-                  return response.text
+                  r = requests.get(url, timeout=30)
+                  r.raise_for_status()
+                  return r.text
               except Exception as e:
                   print(f"下载失败 {url}: {e}")
                   return None
 
-          def parse_rules(content, source_url):
+          def parse_rules(content: str, source_url: str):
               rules = set()
-              for line in content.split('\n'):
-                  if is_valid_rule(line):
-                      rules.add(line.strip())
+              # ✅ 兼容“整份文件被压成一行”的情况：按任意空白切分（空格/换行/Tab）
+              for token in content.replace("\r", "\n").split():
+                  if is_valid_rule(token):
+                      rules.add(token.strip())
               print(f"从 {source_url} 解析出 {len(rules)} 条规则")
               return rules
 
-          def generate_rule_file(rules, filename, rule_type):
+          def generate_rule_file(rules, filename: str, name: str):
               sorted_rules = sorted(rules)
               output_lines = [
-                  f"# NAME: {rule_type} Rules",
-                  f"# DESCRIPTION: {rule_type} rules merged from multiple sources",
+                  f"# NAME: {name}",
+                  f"# DESCRIPTION: {name} rules merged from multiple sources",
                   f"# UPDATED: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
                   "",
                   *sorted_rules
               ]
-              with open(filename, 'w', encoding='utf-8') as f:
+              with open(filename, "w", encoding="utf-8") as f:
                   f.write("\n".join(output_lines))
-              print(f"{rule_type} 规则生成完成！总共 {len(sorted_rules)} 条规则")
+              print(f"{name} 规则生成完成！总共 {len(sorted_rules)} 条规则 -> {filename}")
 
-          def generate_mihomo_format(china_rules, proxy_rules):
+          def to_mihomo_rule(rule: str, policy: str) -> str:
+              """
+              mihomo 规则格式：TYPE,ARGUMENT,POLICY(,no-resolve)
+              这里只处理你名单里常见的：TYPE,VALUE[,no-resolve]
+              """
+              parts = [p.strip() for p in rule.split(",")]
+              if len(parts) < 2:
+                  return ""
+
+              rule_type = parts[0]
+              value = parts[1]
+              extra = parts[2:]
+              nr = any(p == "no-resolve" for p in extra)
+
+              out = f"{rule_type},{value},{policy}"
+              # 只有 target IP 相关规则才需要 no-resolve，这里按原字段带没带来决定
+              if nr:
+                  out += ",no-resolve"
+              return out
+
+          def generate_mihomo_format(china_rules, proxy_rules, ai_rules):
               mihomo_rules = []
 
-              # 国内规则加入 ,DIRECT
+              # 国内：DIRECT
               for rule in china_rules:
-                  if rule.startswith('USER-AGENT') or rule.startswith('IP-ASN'):
-                      continue  # 不处理 USER-AGENT 和 IP-ASN 规则
-                  mihomo_rules.append(f"{rule},DIRECT")
+                  if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
+                      continue
+                  mihomo_rules.append(to_mihomo_rule(rule, "DIRECT"))
 
-              # 国外规则加入 ,Proxy
+              # 国外：Proxy
               for rule in proxy_rules:
-                  if rule.startswith('USER-AGENT') or rule.startswith('IP-ASN'):
-                      continue  # 不处理 USER-AGENT 和 IP-ASN 规则
-                  mihomo_rules.append(f"{rule},Proxy")
+                  if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
+                      continue
+                  mihomo_rules.append(to_mihomo_rule(rule, "Proxy"))
 
-              # 合并国内和国外规则，保存为 mihomo.list
+              # AI：AI_POLICY（默认 AI，可改 Proxy）
+              for rule in ai_rules:
+                  if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
+                      continue
+                  mihomo_rules.append(to_mihomo_rule(rule, AI_POLICY))
+
+              mihomo_rules = [r for r in mihomo_rules if r]
+
               with open("mihomo.list", "w", encoding="utf-8") as f:
                   f.write("rules:\n")
-                  for rule in mihomo_rules:
-                      f.write(f"  - {rule}\n")
+                  for r in mihomo_rules:
+                      f.write(f"  - {r}\n")
 
-              print("mihomo 格式规则生成完成！总共 {len(mihomo_rules)} 条规则")
+              print(f"mihomo 格式规则生成完成！总共 {len(mihomo_rules)} 条规则 -> mihomo.list")
 
-          # 处理国内规则
+          # === China ===
           print("=== 开始处理国内规则 ===")
           china_rules = set()
-          for source_url in china_rule_sources:
-              content = download_rules(source_url)
-              if content:
-                  china_rules.update(parse_rules(content, source_url))
-
-          # ⭐ 加入去重
+          for u in china_rule_sources:
+              c = download_rules(u)
+              if c:
+                  china_rules.update(parse_rules(c, u))
           china_rules = dedupe_no_resolve_priority(china_rules)
+          generate_rule_file(china_rules, "china.list", "China")
 
-          generate_rule_file(china_rules, 'china.list', 'China')
-
-          # 处理国外规则
+          # === Proxy ===
           print("=== 开始处理国外规则 ===")
           proxy_rules = set()
-          for source_url in proxy_rule_sources:
-              content = download_rules(source_url)
-              if content:
-                  proxy_rules.update(parse_rules(content, source_url))
-
-          # ⭐ 加入去重
+          for u in proxy_rule_sources:
+              c = download_rules(u)
+              if c:
+                  proxy_rules.update(parse_rules(c, u))
           proxy_rules = dedupe_no_resolve_priority(proxy_rules)
+          generate_rule_file(proxy_rules, "proxy.list", "Proxy")
 
-          generate_rule_file(proxy_rules, 'proxy.list', 'Proxy')
+          # === AI ===
+          print("=== 开始处理 AI 规则 ===")
+          ai_rules = set()
+          for u in ai_rule_sources:
+              c = download_rules(u)
+              if c:
+                  ai_rules.update(parse_rules(c, u))
+          ai_rules = dedupe_no_resolve_priority(ai_rules)
+          generate_rule_file(ai_rules, "ai.list", "AI")
 
-          # 生成 mihomo 格式的规则文件
-          generate_mihomo_format(china_rules, proxy_rules)
-
+          # mihomo
+          generate_mihomo_format(china_rules, proxy_rules, ai_rules)
           print("所有规则处理完成！")
           EOF
 
@@ -199,16 +247,21 @@ jobs:
       - name: Check generated files
         run: |
           echo "检查生成的文件:"
-          ls -la china.list proxy.list mihomo.list
+          ls -la china.list proxy.list ai.list mihomo.list
+          echo "---- china.list ----"
           head -5 china.list
+          echo "---- proxy.list ----"
           head -5 proxy.list
-          head -5 mihomo.list
+          echo "---- ai.list ----"
+          head -5 ai.list
+          echo "---- mihomo.list ----"
+          head -10 mihomo.list
 
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add china.list proxy.list mihomo.list
+          git add china.list proxy.list ai.list mihomo.list
           if git diff --staged --quiet; then
             echo "没有检测到变化"
           else
