@@ -1,8 +1,7 @@
 # NAME: AI
 # DESCRIPTION: AI rules merged from multiple sources
-# UPDATED: 2025-12-21 02:58:08
+# UPDATED: 2025-12-21 03:02:52
 
-DOMAIN,
 DOMAIN,api.msn.com
 DOMAIN,api.statsig.com
 DOMAIN,assets.msn.com
@@ -26,7 +25,6 @@ DOMAIN,sydney.bing.com
 DOMAIN,www.bing.com
 DOMAIN-KEYWORD,openai
 DOMAIN-KEYWORD,openaicom-api
-DOMAIN-SUFFIX,
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,algolia.net
 DOMAIN-SUFFIX,api.microsoftapp.net
@@ -62,7 +60,5 @@ DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,turn.livekit.cloud
 IP-ASN,14061,no-resolve
 IP-ASN,20473,no-resolve
-IP-CIDR,/32
 IP-CIDR,24.199.123.28/32,no-resolve
 IP-CIDR,64.23.132.171/32,no-resolve
-IP-CIDR6,
