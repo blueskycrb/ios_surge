@@ -61,7 +61,7 @@ jobs:
           ai_rule_sources = [
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Copilot/Copilot.list",
-              "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/AI.list"
+              "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/openai.list"
           ]
 
 
