@@ -28,6 +28,7 @@ jobs:
         run: |
           cat > merge_rules.py << 'EOF'
           #!/usr/bin/env python3
+          import re
           import requests
           from datetime import datetime
 
@@ -56,49 +57,92 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list"
           ]
 
-          # AI 规则源列表（你把自己的 AI 链接放这里）
+          # ✅ AI 规则源列表（把你的链接放这里）
           ai_rule_sources = [
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Copilot/Copilot.list",
-              "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/openai.list"
+              "https://raw.githubusercontent.com/blueskycrb/ios_surge/refs/heads/main/AI.list"
           ]
 
 
-          # mihomo 里 AI 分类默认走哪个策略组名：
-          # 1) 你 mihomo 配置里有策略组叫 AI -> 保持 "AI"
-          # 2) 不想单独分组 -> 改成 "Proxy"
-          AI_POLICY = "AI"
+          # mihomo 里 AI 分类走哪个策略组名：
+          # - 你有单独 AI 策略组：保持 "AI"
+          # - 不想单独分组：改成 "Proxy"
+          AI_POLICY = "Proxy"
 
-          # 支持的规则类型（Loon/Surge 常见）
-          valid_rule_types = {
+          # 基础规则类型（可转为 mihomo）
+          base_rule_types = {
               "DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD",
               "IP-CIDR", "IP-CIDR6", "PROCESS-NAME",
               "IP-ASN", "USER-AGENT"
           }
 
-          def is_valid_rule(line: str) -> bool:
+          # 复合规则类型（只保留到 *.list，不写入 mihomo）
+          compound_rule_types = {"AND", "OR", "NOT"}
+
+          # 总允许类型
+          valid_rule_types = base_rule_types | compound_rule_types
+
+          def strip_inline_comment(line: str) -> str:
               line = (line or "").strip()
               if not line or line.startswith("#"):
-                  return False
-
-              # 去掉行内注释：DOMAIN,xxx # comment
+                  return ""
               if "#" in line:
                   line = line.split("#", 1)[0].strip()
-                  if not line:
-                      return False
+              return line
 
+          def normalize_rule(line: str) -> str:
+              """
+              - 普通规则：按逗号拆分，去掉多余空格，再用逗号拼回去
+                例如：'DOMAIN, chatgpt.com' -> 'DOMAIN,chatgpt.com'
+                例如：'IP-CIDR, 1.1.1.1/32, no-resolve' -> 'IP-CIDR,1.1.1.1/32,no-resolve'
+              - 复合规则（AND/OR/NOT）：只在第一个逗号处分割，保留后面的表达式整体
+              """
+              line = strip_inline_comment(line)
+              if not line:
+                  return ""
+
+              rule_type = line.split(",", 1)[0].strip()
+              if rule_type in compound_rule_types:
+                  # 只 split 一次，保留后面的复杂表达式（里面可能有很多逗号）
+                  if "," not in line:
+                      return ""
+                  rest = line.split(",", 1)[1].strip()
+                  if not rest:
+                      return ""
+                  return f"{rule_type},{rest}"
+
+              parts = [p.strip() for p in line.split(",")]
+              parts = [p for p in parts if p != ""]
+              if len(parts) < 2:
+                  return ""
+              return ",".join(parts)
+
+          def is_valid_rule(line: str) -> bool:
+              line = strip_inline_comment(line)
+              if not line:
+                  return False
+
+              rule_type = line.split(",", 1)[0].strip()
+              if rule_type not in valid_rule_types:
+                  return False
+
+              # 复合规则：只要求第一个逗号后面有内容
+              if rule_type in compound_rule_types:
+                  if "," not in line:
+                      return False
+                  rest = line.split(",", 1)[1].strip()
+                  return bool(rest)
+
+              # 普通规则：必须至少两列且 value 非空
               parts = [p.strip() for p in line.split(",")]
               if len(parts) < 2:
                   return False
-
-              rule_type = parts[0]
-              value = parts[1]
-
-              # ✅ 关键修复：第二列不能为空（否则会出现 DOMAIN, / IP-CIDR, 等垃圾规则）
-              if rule_type not in valid_rule_types or not value:
+              value = parts[1].strip()
+              if not value:
                   return False
 
-              # 可选加强：IP-ASN 必须是纯数字，避免 IP-ASN, 这种
+              # 加强：IP-ASN 必须是数字
               if rule_type == "IP-ASN" and not value.isdigit():
                   return False
 
@@ -106,22 +150,29 @@ jobs:
 
           def has_no_resolve(rule: str) -> bool:
               parts = [p.strip() for p in rule.split(",")]
+              # 复合规则不可能带 no-resolve
+              if parts and parts[0] in compound_rule_types:
+                  return False
               return any(p == "no-resolve" for p in parts[2:])
 
           def format_ip_cidr(rule: str):
               """
-              确保 IP-CIDR 单个 IP 会补 /32，同时保留 no-resolve 等额外字段
-              遇到 value 为空直接返回 None（避免产生 IP-CIDR,/32 这种错误）
+              - 仅处理 IP-CIDR：单个 IP 没有 / 就补 /32
+              - 遇到空 value 直接丢弃（避免 IP-CIDR,/32）
               """
-              parts = [p.strip() for p in (rule or "").split(",")]
+              if not rule:
+                  return None
+              rule_type = rule.split(",", 1)[0].strip()
+              if rule_type in compound_rule_types:
+                  return rule  # 复合规则原样返回
+
+              parts = [p.strip() for p in rule.split(",")]
               if len(parts) < 2:
                   return None
-
               rule_type = parts[0]
               value = parts[1]
               extra = parts[2:]
 
-              # ✅ value 为空直接丢弃
               if not rule_type or not value:
                   return None
 
@@ -139,6 +190,13 @@ jobs:
                   if not formatted:
                       continue
                   rule = formatted
+
+                  rule_type = rule.split(",", 1)[0].strip()
+
+                  # 复合规则：用整行做 key（不做 no-resolve 优先逻辑）
+                  if rule_type in compound_rule_types:
+                      base_map[rule] = rule
+                      continue
 
                   parts = [p.strip() for p in rule.split(",")]
                   if len(parts) < 2:
@@ -164,25 +222,54 @@ jobs:
                   print(f"下载失败 {url}: {e}")
                   return None
 
+          def split_multi_rules_in_line(line: str):
+              """
+              兼容极端情况：一行塞多个规则，例如：
+              'DOMAIN, a.com DOMAIN-SUFFIX, b.com'
+              注意：带空格的标准写法 'DOMAIN, a.com' 也能正确处理。
+              复合规则 AND/OR/NOT 不做拆分（避免拆坏表达式）。
+              """
+              line = line.strip()
+              if not line:
+                  return []
+
+              first_type = line.split(",", 1)[0].strip()
+              if first_type in compound_rule_types:
+                  return [line]
+
+              # 在行里找每个规则的起点：<TYPE>,
+              type_pattern = "|".join(re.escape(t) for t in sorted(base_rule_types, key=len, reverse=True))
+              pattern = re.compile(rf"(?<!\S)({type_pattern})\s*,")
+              matches = list(pattern.finditer(line))
+              if len(matches) <= 1:
+                  return [line]
+
+              segs = []
+              for i, m in enumerate(matches):
+                  start = m.start()
+                  end = matches[i + 1].start() if i + 1 < len(matches) else len(line)
+                  seg = line[start:end].strip()
+                  if seg:
+                      segs.append(seg)
+              return segs
+
           def parse_rules(content: str, source_url: str):
-              """
-              兼容：
-              - 正常按行规则
-              - 偶尔出现“一行塞多条”的情况（用空白切开）
-              同时依赖 is_valid_rule 过滤空 value 垃圾规则
-              """
               rules = set()
               content = (content or "").replace("\r", "\n")
 
               for raw_line in content.split("\n"):
-                  line = raw_line.strip()
-                  if not line or line.startswith("#"):
+                  line = strip_inline_comment(raw_line)
+                  if not line:
                       continue
 
-                  # 一行里可能塞了多个规则，用空白拆开逐个判断
-                  for token in line.split():
-                      if is_valid_rule(token):
-                          rules.add(token.strip())
+                  for seg in split_multi_rules_in_line(line):
+                      seg = seg.strip()
+                      if not seg:
+                          continue
+                      if is_valid_rule(seg):
+                          norm = normalize_rule(seg)
+                          if norm and is_valid_rule(norm):
+                              rules.add(norm)
 
               print(f"从 {source_url} 解析出 {len(rules)} 条规则")
               return rules
@@ -203,8 +290,12 @@ jobs:
           def to_mihomo_rule(rule: str, policy: str) -> str:
               """
               mihomo 规则格式：TYPE,ARGUMENT,POLICY(,no-resolve)
-              输入通常是：TYPE,VALUE[,no-resolve]
+              这里只转换基础规则类型，复合 AND/OR/NOT 直接跳过。
               """
+              rule_type = rule.split(",", 1)[0].strip()
+              if rule_type in compound_rule_types:
+                  return ""
+
               parts = [p.strip() for p in rule.split(",")]
               if len(parts) < 2:
                   return ""
@@ -212,11 +303,10 @@ jobs:
               rule_type = parts[0]
               value = parts[1]
               extra = parts[2:]
-              nr = any(p == "no-resolve" for p in extra)
-
               if not rule_type or not value:
                   return ""
 
+              nr = any(p == "no-resolve" for p in extra)
               out = f"{rule_type},{value},{policy}"
               if nr:
                   out += ",no-resolve"
@@ -241,7 +331,7 @@ jobs:
                   if r:
                       mihomo_rules.append(r)
 
-              # AI：AI_POLICY（默认 AI，可改 Proxy）
+              # AI：AI_POLICY
               for rule in ai_rules:
                   if rule.startswith("USER-AGENT") or rule.startswith("IP-ASN"):
                       continue
@@ -299,14 +389,10 @@ jobs:
         run: |
           echo "检查生成的文件:"
           ls -la china.list proxy.list ai.list mihomo.list
-          echo "---- china.list ----"
-          head -5 china.list
-          echo "---- proxy.list ----"
-          head -5 proxy.list
-          echo "---- ai.list ----"
-          head -5 ai.list
-          echo "---- mihomo.list ----"
-          head -10 mihomo.list
+          echo "---- ai.list (前30行) ----"
+          head -30 ai.list
+          echo "---- mihomo.list (前30行) ----"
+          head -30 mihomo.list
 
       - name: Commit and push changes
         run: |
