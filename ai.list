@@ -1,6 +1,6 @@
 # NAME: AI
 # DESCRIPTION: AI rules merged from multiple sources
-# UPDATED: 2026-01-17 01:20:39
+# UPDATED: 2026-01-18 01:39:09
 
 AND,((DOMAIN-KEYWORD, chatgpt-async-webps-prod-), (DOMAIN-SUFFIX, webpubsub.azure.com))
 AND,((DOMAIN-KEYWORD, openaicom-api-), (DOMAIN-SUFFIX, azurefd.net))
