@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2026-02-08 02:12:24
+# UPDATED: 2026-02-08 04:53:45
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -301,6 +301,7 @@ DOMAIN-SUFFIX,apibdzy.com
 DOMAIN-SUFFIX,apigee.com
 DOMAIN-SUFFIX,apilyzy.com
 DOMAIN-SUFFIX,apiyhzy.com
+DOMAIN-SUFFIX,apnews.com
 DOMAIN-SUFFIX,app-analytics-services.com
 DOMAIN-SUFFIX,app-measurement-cn.com
 DOMAIN-SUFFIX,app-measurement.com
@@ -352,6 +353,7 @@ DOMAIN-SUFFIX,baselinestudy.com
 DOMAIN-SUFFIX,baselinestudy.org
 DOMAIN-SUFFIX,battlebreakers.com
 DOMAIN-SUFFIX,bazel.build
+DOMAIN-SUFFIX,bbc.com
 DOMAIN-SUFFIX,bcdef.vip
 DOMAIN-SUFFIX,bdn.dev
 DOMAIN-SUFFIX,beacons.gvt2.com
@@ -453,6 +455,7 @@ DOMAIN-SUFFIX,bntrace.com
 DOMAIN-SUFFIX,bookstagram.com
 DOMAIN-SUFFIX,bootstrapcdn.com
 DOMAIN-SUFFIX,botorch.org
+DOMAIN-SUFFIX,brave.com
 DOMAIN-SUFFIX,braze.com
 DOMAIN-SUFFIX,braze.eu
 DOMAIN-SUFFIX,brendonjkding.github.io
@@ -1875,6 +1878,7 @@ DOMAIN-SUFFIX,registry.google
 DOMAIN-SUFFIX,release-assets.githubusercontent.com
 DOMAIN-SUFFIX,remerge.io
 DOMAIN-SUFFIX,repo.co.kr
+DOMAIN-SUFFIX,reuters.com
 DOMAIN-SUFFIX,revenuecat.com
 DOMAIN-SUFFIX,revolv.com
 DOMAIN-SUFFIX,ridepenguin.com
