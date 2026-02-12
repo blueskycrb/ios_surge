@@ -1,6 +1,6 @@
 # NAME: China
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2026-02-12 13:45:17
+# UPDATED: 2026-02-12 13:54:25
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -718,6 +718,7 @@ DOMAIN-SUFFIX,haday.cn
 DOMAIN-SUFFIX,haidilao.com
 DOMAIN-SUFFIX,haineiedu.com
 DOMAIN-SUFFIX,halomobi.com
+DOMAIN-SUFFIX,haokale.com:443
 DOMAIN-SUFFIX,hb12333.com
 DOMAIN-SUFFIX,hb96568.com
 DOMAIN-SUFFIX,hbea.edu.cn
