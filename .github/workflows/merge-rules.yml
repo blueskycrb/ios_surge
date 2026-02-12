@@ -39,7 +39,8 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaASN/ChinaASN.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list",
-              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/MicrosoftEdge/MicrosoftEdge.list"
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/MicrosoftEdge/MicrosoftEdge.list",
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMax/ChinaMax.list"
           ]
 
           # 国外规则源列表
@@ -56,6 +57,7 @@ jobs:
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Epic/Epic.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy.list",
+              "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Proxy/Proxy_Domain.list",
               "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ProxyLite/ProxyLite.list"
           ]
 
