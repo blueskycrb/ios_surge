@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2026-05-07 02:34:51
+# UPDATED: 2026-05-07 14:18:25
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -1747,6 +1747,7 @@ DOMAIN-SUFFIX,ibm.com
 DOMAIN-SUFFIX,ibytedtos.com
 DOMAIN-SUFFIX,ibyteimg.com
 DOMAIN-SUFFIX,ichitaso.com
+DOMAIN-SUFFIX,icloud.com
 DOMAIN-SUFFIX,icntv.xyz
 DOMAIN-SUFFIX,icoco.com
 DOMAIN-SUFFIX,iconify.design
