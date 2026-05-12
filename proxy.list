@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2026-05-11 02:48:18
+# UPDATED: 2026-05-12 02:40:22
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -832,7 +832,6 @@ DOMAIN-SUFFIX,doubleclick.com
 DOMAIN-SUFFIX,doubleclick.net
 DOMAIN-SUFFIX,dovx.tk
 DOMAIN-SUFFIX,dowjones.com
-DOMAIN-SUFFIX,download.qatp1.net
 DOMAIN-SUFFIX,draftjs.org
 DOMAIN-SUFFIX,dribbble.com
 DOMAIN-SUFFIX,droplr.com
@@ -2047,7 +2046,6 @@ DOMAIN-SUFFIX,modmyi.com
 DOMAIN-SUFFIX,moduapi.cc
 DOMAIN-SUFFIX,mogg.top
 DOMAIN-SUFFIX,moneywithfacebook.com
-DOMAIN-SUFFIX,monitoring.qpdp1.net
 DOMAIN-SUFFIX,moodstocks.com
 DOMAIN-SUFFIX,moon.fm
 DOMAIN-SUFFIX,mooo.com
@@ -2317,16 +2315,12 @@ DOMAIN-SUFFIX,pushvipe.com
 DOMAIN-SUFFIX,putaozyw.net
 DOMAIN-SUFFIX,pximg.net
 DOMAIN-SUFFIX,pyrobot.org
-DOMAIN-SUFFIX,qagpublic.qatp1.net
-DOMAIN-SUFFIX,qgadmin.qcpp1.net
 DOMAIN-SUFFIX,qiao-cn.com
 DOMAIN-SUFFIX,qingr.moe
 DOMAIN-SUFFIX,qiniudn.com
 DOMAIN-SUFFIX,qiyoudy4.com
 DOMAIN-SUFFIX,qpx.googleflights.net
 DOMAIN-SUFFIX,quad9.net
-DOMAIN-SUFFIX,qualysapi.qatp1.net
-DOMAIN-SUFFIX,qualysguard.qpdp1.net
 DOMAIN-SUFFIX,quantumult.app
 DOMAIN-SUFFIX,quay.io
 DOMAIN-SUFFIX,questvisual.com
@@ -2420,7 +2414,6 @@ DOMAIN-SUFFIX,saurik.com
 DOMAIN-SUFFIX,savethedate.foo
 DOMAIN-SUFFIX,saynow.com
 DOMAIN-SUFFIX,sb-cd.com
-DOMAIN-SUFFIX,scanservice1.qcpp1.net
 DOMAIN-SUFFIX,scdn.co
 DOMAIN-SUFFIX,schema.org
 DOMAIN-SUFFIX,schemer.com
