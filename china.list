@@ -1,6 +1,6 @@
 # NAME: China
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2026-05-19 02:52:20
+# UPDATED: 2026-05-20 02:52:41
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -11193,6 +11193,7 @@ IP-CIDR,74.119.193.4/30,no-resolve
 IP-CIDR,74.119.193.64/26,no-resolve
 IP-CIDR,74.119.193.8/29,no-resolve
 IP-CIDR,74.125.16.64/26,no-resolve
+IP-CIDR,74.214.161.0/24,no-resolve
 IP-CIDR,74.63.27.0/24,no-resolve
 IP-CIDR,74.80.115.0/24,no-resolve
 IP-CIDR,75.75.236.0/29,no-resolve
