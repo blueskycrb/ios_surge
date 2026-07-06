@@ -1,6 +1,6 @@
 # NAME: China
 # DESCRIPTION: China rules merged from multiple sources
-# UPDATED: 2026-07-05 02:43:18
+# UPDATED: 2026-07-06 02:49:06
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -221,6 +221,7 @@ DOMAIN-SUFFIX,anfutong.com.cn
 DOMAIN-SUFFIX,anjuke.com
 DOMAIN-SUFFIX,anjukestatic.com
 DOMAIN-SUFFIX,ankarazirvesi2018.com
+DOMAIN-SUFFIX,anquan
 DOMAIN-SUFFIX,anticheatexpert.com
 DOMAIN-SUFFIX,antpcdn.com
 DOMAIN-SUFFIX,anythinktech.com
@@ -1596,6 +1597,7 @@ DOMAIN-SUFFIX,sharepointonline.com
 DOMAIN-SUFFIX,shimo.im
 DOMAIN-SUFFIX,shimowd.cn
 DOMAIN-SUFFIX,shiquanyi.cn
+DOMAIN-SUFFIX,shouji
 DOMAIN-SUFFIX,shoujiduoduo.com
 DOMAIN-SUFFIX,shouqianba.com
 DOMAIN-SUFFIX,showmoney.cn
@@ -1609,6 +1611,7 @@ DOMAIN-SUFFIX,shuzilm.cn
 DOMAIN-SUFFIX,sigmob.cn
 DOMAIN-SUFFIX,signalr.net
 DOMAIN-SUFFIX,simility.com
+DOMAIN-SUFFIX,sina
 DOMAIN-SUFFIX,sina.cn
 DOMAIN-SUFFIX,sinaimg.cn
 DOMAIN-SUFFIX,sinajs.cn
@@ -1817,6 +1820,7 @@ DOMAIN-SUFFIX,wcfaka.com
 DOMAIN-SUFFIX,webmoneyinfo.com
 DOMAIN-SUFFIX,wechat.com
 DOMAIN-SUFFIX,wechatpay.cn
+DOMAIN-SUFFIX,weibo
 DOMAIN-SUFFIX,weibo.cn
 DOMAIN-SUFFIX,weibo.com
 DOMAIN-SUFFIX,weibocdn.com
@@ -1928,6 +1932,7 @@ DOMAIN-SUFFIX,xiaomi.net
 DOMAIN-SUFFIX,xiaomiyoupin.com
 DOMAIN-SUFFIX,xiaoyisz.com
 DOMAIN-SUFFIX,xiaoyoujuchang.com
+DOMAIN-SUFFIX,xihuan
 DOMAIN-SUFFIX,ximalaya.com
 DOMAIN-SUFFIX,xingzhige.com
 DOMAIN-SUFFIX,xinyifm.cn
@@ -1943,6 +1948,7 @@ DOMAIN-SUFFIX,xn--6frz82g
 DOMAIN-SUFFIX,xn--6qq986b3xl
 DOMAIN-SUFFIX,xn--8y0a063a
 DOMAIN-SUFFIX,xn--9et52u
+DOMAIN-SUFFIX,xn--9krt00a
 DOMAIN-SUFFIX,xn--bnq297cix3a.cn
 DOMAIN-SUFFIX,xn--czr694b
 DOMAIN-SUFFIX,xn--czrs0t
@@ -2001,6 +2007,7 @@ DOMAIN-SUFFIX,youzanyun.com
 DOMAIN-SUFFIX,ysdqjs.cn
 DOMAIN-SUFFIX,yuchengyouxi.com
 DOMAIN-SUFFIX,yummy.tech
+DOMAIN-SUFFIX,yun
 DOMAIN-SUFFIX,yunpay.cc
 DOMAIN-SUFFIX,yunzhan365.com
 DOMAIN-SUFFIX,yunzhanxinxi.com
@@ -6726,6 +6733,7 @@ IP-CIDR,154.72.44.0/24,no-resolve
 IP-CIDR,154.72.47.0/24,no-resolve
 IP-CIDR,154.8.128.0/17,no-resolve
 IP-CIDR,154.8.48.0/20,no-resolve
+IP-CIDR,154.84.180.0/24,no-resolve
 IP-CIDR,154.89.32.0/20,no-resolve
 IP-CIDR,154.91.158.0/23,no-resolve
 IP-CIDR,155.102.0.0/16,no-resolve
@@ -7398,6 +7406,7 @@ IP-CIDR,188.240.211.0/25,no-resolve
 IP-CIDR,188.241.80.0/24,no-resolve
 IP-CIDR,188.65.16.0/22,no-resolve
 IP-CIDR,189.31.222.0/24,no-resolve
+IP-CIDR,189.75.180.0/24,no-resolve
 IP-CIDR,189.75.185.0/24,no-resolve
 IP-CIDR,191.219.18.0/24,no-resolve
 IP-CIDR,191.222.245.0/24,no-resolve
@@ -7500,6 +7509,7 @@ IP-CIDR,20.251.0.0/22,no-resolve
 IP-CIDR,20.253.4.0/24,no-resolve
 IP-CIDR,20.253.89.0/24,no-resolve
 IP-CIDR,20.255.255.0/24,no-resolve
+IP-CIDR,200.102.179.0/24,no-resolve
 IP-CIDR,200.102.180.0/24,no-resolve
 IP-CIDR,201.11.233.0/24,no-resolve
 IP-CIDR,201.14.217.0/24,no-resolve
@@ -11215,6 +11225,7 @@ IP-CIDR,67.199.158.164/30,no-resolve
 IP-CIDR,67.199.159.224/30,no-resolve
 IP-CIDR,67.220.137.144/28,no-resolve
 IP-CIDR,67.220.158.24/29,no-resolve
+IP-CIDR,68.166.209.0/24,no-resolve
 IP-CIDR,68.79.0.0/18,no-resolve
 IP-CIDR,69.107.7.16/29,no-resolve
 IP-CIDR,69.163.104.0/24,no-resolve
@@ -11226,6 +11237,7 @@ IP-CIDR,69.230.192.0/18,no-resolve
 IP-CIDR,69.231.128.0/18,no-resolve
 IP-CIDR,69.234.192.0/18,no-resolve
 IP-CIDR,69.235.128.0/18,no-resolve
+IP-CIDR,69.33.203.0/24,no-resolve
 IP-CIDR,69.85.93.0/24,no-resolve
 IP-CIDR,71.131.192.0/18,no-resolve
 IP-CIDR,71.132.0.0/18,no-resolve
@@ -15235,6 +15247,7 @@ IP-CIDR6,2a0f:1cc5:3222::/48,no-resolve
 IP-CIDR6,2a0f:1cc5:40::/48,no-resolve
 IP-CIDR6,2a0f:1cc5:4508::/46,no-resolve
 IP-CIDR6,2a0f:1cc5:45ff::/48,no-resolve
+IP-CIDR6,2a0f:1cc5:4700::/40,no-resolve
 IP-CIDR6,2a0f:1cc5:600::/47,no-resolve
 IP-CIDR6,2a0f:1cc5:603::/48,no-resolve
 IP-CIDR6,2a0f:1cc5:642::/48,no-resolve
@@ -15298,7 +15311,7 @@ IP-CIDR6,2a12:dd47:db2c::/48,no-resolve
 IP-CIDR6,2a13:1800::/29,no-resolve
 IP-CIDR6,2a13:8b40::/29,no-resolve
 IP-CIDR6,2a13:8c87::/32,no-resolve
-IP-CIDR6,2a13:9500:194::/48,no-resolve
+IP-CIDR6,2a13:9500:194::/47,no-resolve
 IP-CIDR6,2a13:a5c3:d600::/42,no-resolve
 IP-CIDR6,2a13:a5c3:f000::/40,no-resolve
 IP-CIDR6,2a13:a5c3:f1c0::/44,no-resolve
