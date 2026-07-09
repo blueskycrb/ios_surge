@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2026-07-08 02:22:34
+# UPDATED: 2026-07-09 02:36:19
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -437,7 +437,6 @@ DOMAIN-SUFFIX,bandwagonhost.com
 DOMAIN-SUFFIX,baselinestudy.com
 DOMAIN-SUFFIX,baselinestudy.org
 DOMAIN-SUFFIX,battle.net
-DOMAIN-SUFFIX,battlebreakers.com
 DOMAIN-SUFFIX,battlenet.com
 DOMAIN-SUFFIX,bazel.build
 DOMAIN-SUFFIX,bbc.co
@@ -846,10 +845,7 @@ DOMAIN-SUFFIX,dw.com
 DOMAIN-SUFFIX,dxcool223-repo.github.io
 DOMAIN-SUFFIX,dy066.com
 DOMAIN-SUFFIX,dyneti.com
-DOMAIN-SUFFIX,eac-cdn.com
 DOMAIN-SUFFIX,earthcam.com
-DOMAIN-SUFFIX,easy.ac
-DOMAIN-SUFFIX,easyanticheat.net
 DOMAIN-SUFFIX,easybib.com
 DOMAIN-SUFFIX,easygujaratityping.com
 DOMAIN-SUFFIX,easyonlinetyping.com
@@ -871,8 +867,6 @@ DOMAIN-SUFFIX,engadget.com
 DOMAIN-SUFFIX,enmity.app
 DOMAIN-SUFFIX,entrust.net
 DOMAIN-SUFFIX,epic.network
-DOMAIN-SUFFIX,epicgames.com
-DOMAIN-SUFFIX,epicgames.dev
 DOMAIN-SUFFIX,episodic.com
 DOMAIN-SUFFIX,essl-cdxs.edgekey.net
 DOMAIN-SUFFIX,etherscan.io
@@ -1256,7 +1250,6 @@ DOMAIN-SUFFIX,fontplus.jp
 DOMAIN-SUFFIX,foofle.com
 DOMAIN-SUFFIX,foreignaffairs.com
 DOMAIN-SUFFIX,foreignpolicy.com
-DOMAIN-SUFFIX,fortnite.com
 DOMAIN-SUFFIX,fosebook.com
 DOMAIN-SUFFIX,fouadraheb.com
 DOMAIN-SUFFIX,fpacebook.com
@@ -1693,7 +1686,6 @@ DOMAIN-SUFFIX,hearse.lol
 DOMAIN-SUFFIX,hearsedev.github.io
 DOMAIN-SUFFIX,heimuer.tv
 DOMAIN-SUFFIX,heimuer.xyz
-DOMAIN-SUFFIX,helpshift.com
 DOMAIN-SUFFIX,henghengmao.com
 DOMAIN-SUFFIX,heroku.com
 DOMAIN-SUFFIX,hey.gle
@@ -2219,7 +2211,6 @@ DOMAIN-SUFFIX,pan-8os.pages.dev
 DOMAIN-SUFFIX,panoramio.com
 DOMAIN-SUFFIX,paoluz.com
 DOMAIN-SUFFIX,paoluz.link
-DOMAIN-SUFFIX,paragon.com
 DOMAIN-SUFFIX,parallels.com
 DOMAIN-SUFFIX,parse.com
 DOMAIN-SUFFIX,parsevideo.com
@@ -2264,7 +2255,6 @@ DOMAIN-SUFFIX,pki.goog
 DOMAIN-SUFFIX,play.googleapis.com
 DOMAIN-SUFFIX,playartifact.com
 DOMAIN-SUFFIX,player.fm
-DOMAIN-SUFFIX,playparagon.com
 DOMAIN-SUFFIX,playpcesor.com
 DOMAIN-SUFFIX,playstation.com
 DOMAIN-SUFFIX,playstation.net
@@ -2382,7 +2372,6 @@ DOMAIN-SUFFIX,riotcdn.net
 DOMAIN-SUFFIX,riotgames.com
 DOMAIN-SUFFIX,rixtelecom.se
 DOMAIN-SUFFIX,rob311.com
-DOMAIN-SUFFIX,roborecall.com
 DOMAIN-SUFFIX,rocksdb.com
 DOMAIN-SUFFIX,rocksdb.net
 DOMAIN-SUFFIX,rocksdb.org
@@ -2437,7 +2426,6 @@ DOMAIN-SUFFIX,servarica.com
 DOMAIN-SUFFIX,serveteck.com
 DOMAIN-SUFFIX,sexinsex.net
 DOMAIN-SUFFIX,sgpstatp.com
-DOMAIN-SUFFIX,shadowcomplex.com
 DOMAIN-SUFFIX,shadowsocks.org
 DOMAIN-SUFFIX,shadowverse.jp
 DOMAIN-SUFFIX,sharethis.com
@@ -2508,7 +2496,6 @@ DOMAIN-SUFFIX,spotifycdn.com
 DOMAIN-SUFFIX,sprig.com
 DOMAIN-SUFFIX,spring.io
 DOMAIN-SUFFIX,spring.net
-DOMAIN-SUFFIX,spyjinx.com
 DOMAIN-SUFFIX,squarespace.com
 DOMAIN-SUFFIX,squidforce.eu.org
 DOMAIN-SUFFIX,ss2.us
@@ -2793,8 +2780,6 @@ DOMAIN-SUFFIX,unibots.in
 DOMAIN-SUFFIX,unisvg.com
 DOMAIN-SUFFIX,uniswap.org
 DOMAIN-SUFFIX,unpo.org
-DOMAIN-SUFFIX,unrealengine.com
-DOMAIN-SUFFIX,unrealtournament.com
 DOMAIN-SUFFIX,unsplash.com
 DOMAIN-SUFFIX,untraceable.us
 DOMAIN-SUFFIX,uploaded.net
