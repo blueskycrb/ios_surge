@@ -1,9 +1,9 @@
 # NAME: AI
-# DESCRIPTION: AI rules merged from multiple sources
-# UPDATED: 2026-07-11 02:13:43
+# DESCRIPTION: AI rules generated with AI > Proxy > China precedence
+# UPDATED: 2026-07-11 15:11:06 UTC
 
-AND,((DOMAIN-KEYWORD, chatgpt-async-webps-prod-), (DOMAIN-SUFFIX, webpubsub.azure.com))
-AND,((DOMAIN-KEYWORD, openaicom-api-), (DOMAIN-SUFFIX, azurefd.net))
+AND,((DOMAIN-KEYWORD,chatgpt-async-webps-prod-),(DOMAIN-SUFFIX,webpubsub.azure.com))
+AND,((DOMAIN-KEYWORD,openaicom-api-),(DOMAIN-SUFFIX,azurefd.net))
 DOMAIN,ai.google.dev
 DOMAIN,aida.googleapis.com
 DOMAIN,aiplatform.googleapis.com
@@ -122,8 +122,6 @@ DOMAIN-SUFFIX,trae.ai
 DOMAIN-SUFFIX,turn.livekit.cloud
 DOMAIN-SUFFIX,voyageai.com
 DOMAIN-SUFFIX,x.ai
-IP-ASN,14061,no-resolve
-IP-ASN,20473,no-resolve
 IP-CIDR,160.79.104.0/23,no-resolve
 IP-CIDR,24.199.123.28/32,no-resolve
 IP-CIDR,64.23.132.171/32,no-resolve

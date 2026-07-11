@@ -1,6 +1,6 @@
 # NAME: Proxy
-# DESCRIPTION: Proxy rules merged from multiple sources
-# UPDATED: 2026-07-11 02:13:42
+# DESCRIPTION: Proxy rules generated with AI > Proxy > China precedence
+# UPDATED: 2026-07-11 15:11:06 UTC
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -17,14 +17,12 @@ DOMAIN,alo.works
 DOMAIN,amp-api.podcasts.apple.com
 DOMAIN,aosikazy.com
 DOMAIN,api.imem.app
-DOMAIN,api.msn.com
 DOMAIN,api.swiftgram.app
 DOMAIN,api.waqi.info
 DOMAIN,apiyutu.com
 DOMAIN,appraven.net
 DOMAIN,apptools.fun
 DOMAIN,aqi.aqicn.org
-DOMAIN,assets.msn.com
 DOMAIN,assets1.xboxlive.com
 DOMAIN,assets2.xboxlive.com
 DOMAIN,atarbinian.com
@@ -34,20 +32,17 @@ DOMAIN,beta.music.apple.com
 DOMAIN,bfikuncdn.com
 DOMAIN,bfzyapi.com
 DOMAIN,books.apple.com
-DOMAIN,browser-intake-datadoghq.com
 DOMAIN,browser-intake-us5-datadoghq.com
 DOMAIN,buymeacoffee.com
 DOMAIN,carpt.net
 DOMAIN,cdn-cookieyes.com
 DOMAIN,cdp.cloud.unity3d.com
-DOMAIN,chat.com
 DOMAIN,chatboxai.app
 DOMAIN,check0ver.com
 DOMAIN,chinesebuilding.club
 DOMAIN,cjhwba.com
 DOMAIN,ckzy.me
 DOMAIN,clubhouse.pubnubapi.com
-DOMAIN,copilot.microsoft.com
 DOMAIN,creaturecoding.com
 DOMAIN,cydia-app.com
 DOMAIN,czzy.top
@@ -115,7 +110,6 @@ DOMAIN,lf16-pkgcdn.pitaya-clientai.com
 DOMAIN,liam.page
 DOMAIN,limneos.net
 DOMAIN,linux.do
-DOMAIN,location.microsoft.com
 DOMAIN,login.microsoftonline.com
 DOMAIN,lovedan.net
 DOMAIN,lrclib.net
@@ -144,8 +138,6 @@ DOMAIN,sc1080.top
 DOMAIN,sdzyapi.com
 DOMAIN,search.yahoo.co.jp
 DOMAIN,securevault.top
-DOMAIN,self.events.data.microsoft.com
-DOMAIN,sentry.io
 DOMAIN,sezo.app
 DOMAIN,simiyy.com
 DOMAIN,skitty.xyz
@@ -164,7 +156,6 @@ DOMAIN,themepro.vip
 DOMAIN,themepro.work
 DOMAIN,tigisoftware.com
 DOMAIN,tmyy.cc
-DOMAIN,trae-api-sg.mchost.guru
 DOMAIN,tv.apple.com
 DOMAIN,unavatar.io
 DOMAIN,unpkg.com
@@ -182,7 +173,7 @@ DOMAIN,yandexmetrica.com
 DOMAIN,yastatic.net
 DOMAIN,youtu.be
 DOMAIN,zpsps.com
-DOMAIN-KEYWORD,.pinterest.
+DOMAIN-KEYWORD,.pinterest
 DOMAIN-KEYWORD,1drv
 DOMAIN-KEYWORD,1e100
 DOMAIN-KEYWORD,abema
@@ -315,7 +306,6 @@ DOMAIN-SUFFIX,akusio.github.io
 DOMAIN-SUFFIX,alexia.lol
 DOMAIN-SUFFIX,alfhaily.me
 DOMAIN-SUFFIX,alfredapp.com
-DOMAIN-SUFFIX,algolia.net
 DOMAIN-SUFFIX,alias20.gitlab.io
 DOMAIN-SUFFIX,alice.ws
 DOMAIN-SUFFIX,alipansou.com
@@ -1647,7 +1637,6 @@ DOMAIN-SUFFIX,graphql.org
 DOMAIN-SUFFIX,gravatar.com
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,gridaware.app
-DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,groups.com
 DOMAIN-SUFFIX,grow.me
 DOMAIN-SUFFIX,growplow.events
@@ -1845,7 +1834,6 @@ DOMAIN-SUFFIX,intagram.com
 DOMAIN-SUFFIX,intagrm.com
 DOMAIN-SUFFIX,intentiq.com
 DOMAIN-SUFFIX,intercom.com
-DOMAIN-SUFFIX,intercom.io
 DOMAIN-SUFFIX,intercomassets.com
 DOMAIN-SUFFIX,internet.org
 DOMAIN-SUFFIX,intgram.com
@@ -2429,8 +2417,6 @@ DOMAIN-SUFFIX,scribd.com
 DOMAIN-SUFFIX,scriptcat.org
 DOMAIN-SUFFIX,search.com
 DOMAIN-SUFFIX,sectigo.com
-DOMAIN-SUFFIX,segment.io
-DOMAIN-SUFFIX,sentry.io
 DOMAIN-SUFFIX,serv00.com
 DOMAIN-SUFFIX,serv00.net
 DOMAIN-SUFFIX,servarica.com
@@ -2571,7 +2557,6 @@ DOMAIN-SUFFIX,storify.com
 DOMAIN-SUFFIX,straitstimes.com
 DOMAIN-SUFFIX,streamable.com
 DOMAIN-SUFFIX,streaming.mediaservices.windows.net
-DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,stripe.network
 DOMAIN-SUFFIX,stripecdn.com
 DOMAIN-SUFFIX,studywatchbyverily.com
@@ -2706,7 +2691,6 @@ DOMAIN-SUFFIX,tmagazine.com
 DOMAIN-SUFFIX,tmall.hk
 DOMAIN-SUFFIX,tmblr.co
 DOMAIN-SUFFIX,todoist.com
-DOMAIN-SUFFIX,together.ai
 DOMAIN-SUFFIX,togetter.com
 DOMAIN-SUFFIX,toggleable.com
 DOMAIN-SUFFIX,tokyocn.com
@@ -2720,7 +2704,6 @@ DOMAIN-SUFFIX,torrentproject.se
 DOMAIN-SUFFIX,torrentz.eu
 DOMAIN-SUFFIX,tpbid.com
 DOMAIN-SUFFIX,tradingview.com
-DOMAIN-SUFFIX,trae.ai
 DOMAIN-SUFFIX,trakt.tv
 DOMAIN-SUFFIX,translate.googleapis.com
 DOMAIN-SUFFIX,transparency.org
