@@ -1,6 +1,6 @@
 # NAME: China
 # DESCRIPTION: China rules generated with AI > Proxy > China precedence
-# UPDATED: 2026-09-01 03:21:11 UTC
+# UPDATED: 2026-09-02 02:39:22 UTC
 
 DOMAIN,1panel.cn
 DOMAIN,aliys.cn
@@ -2245,7 +2245,6 @@ IP-CIDR,101.72.0.0/14,no-resolve
 IP-CIDR,101.76.0.0/15,no-resolve
 IP-CIDR,101.78.0.0/22,no-resolve
 IP-CIDR,101.78.32.0/19,no-resolve
-IP-CIDR,101.79.220.0/24,no-resolve
 IP-CIDR,101.80.0.0/12,no-resolve
 IP-CIDR,101.96.0.0/21,no-resolve
 IP-CIDR,101.96.128.0/17,no-resolve
