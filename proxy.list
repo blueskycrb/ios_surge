@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules generated with AI > Proxy > China precedence
-# UPDATED: 2026-10-04 04:06:35 UTC
+# UPDATED: 2026-10-16 02:57:24 UTC
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -611,6 +611,9 @@ DOMAIN-SUFFIX,camo.githubusercontent.com
 DOMAIN-SUFFIX,campuslondon.com
 DOMAIN-SUFFIX,canister.me
 DOMAIN-SUFFIX,capcut.com
+DOMAIN-SUFFIX,capcutapi.com
+DOMAIN-SUFFIX,capcutapi.us
+DOMAIN-SUFFIX,capcutstatic.com
 DOMAIN-SUFFIX,capitalg.com
 DOMAIN-SUFFIX,careersatfb.com
 DOMAIN-SUFFIX,carnet.hr
