@@ -1,6 +1,6 @@
 # NAME: Proxy
 # DESCRIPTION: Proxy rules generated with AI > Proxy > China precedence
-# UPDATED: 2026-10-16 02:57:24 UTC
+# UPDATED: 2026-10-24 03:05:49 UTC
 
 DOMAIN,05hao.top
 DOMAIN,1-b.net
@@ -817,6 +817,7 @@ DOMAIN-SUFFIX,docker.com
 DOMAIN-SUFFIX,docker.io
 DOMAIN-SUFFIX,dockerhub.com
 DOMAIN-SUFFIX,donato-fiore.github.io
+DOMAIN-SUFFIX,dota2.com
 DOMAIN-SUFFIX,dota2.wmsj.cn
 DOMAIN-SUFFIX,dotfacebook.com
 DOMAIN-SUFFIX,dotfacebook.net
@@ -2542,6 +2543,7 @@ DOMAIN-SUFFIX,steambroadcast.akamaized.net
 DOMAIN-SUFFIX,steamcdn-a.akamaihd.net
 DOMAIN-SUFFIX,steamcommunity-a.akamaihd.net
 DOMAIN-SUFFIX,steamcommunity.com
+DOMAIN-SUFFIX,steamconnecttest.com
 DOMAIN-SUFFIX,steamcontent.tnkjmec.com
 DOMAIN-SUFFIX,steamdeck.com
 DOMAIN-SUFFIX,steamgames.com
@@ -2815,6 +2817,7 @@ DOMAIN-SUFFIX,v2ex.com
 DOMAIN-SUFFIX,v2ray.com
 DOMAIN-SUFFIX,v8.dev
 DOMAIN-SUFFIX,v8project.org
+DOMAIN-SUFFIX,valve.net
 DOMAIN-SUFFIX,valvesoftware.com
 DOMAIN-SUFFIX,van001.com
 DOMAIN-SUFFIX,vanpeople.com
@@ -3258,9 +3261,11 @@ IP-ASN,59930,no-resolve
 IP-ASN,62014,no-resolve
 IP-ASN,62041,no-resolve
 IP-CIDR,1.201.0.0/24,no-resolve
+IP-CIDR,103.10.124.0/23,no-resolve
 IP-CIDR,103.2.28.0/22,no-resolve
 IP-CIDR,103.246.56.0/22,no-resolve
 IP-CIDR,103.27.148.0/22,no-resolve
+IP-CIDR,103.28.54.0/24,no-resolve
 IP-CIDR,103.4.96.0/22,no-resolve
 IP-CIDR,108.168.176.192/26,no-resolve
 IP-CIDR,108.168.177.0/27,no-resolve
@@ -3295,13 +3300,17 @@ IP-CIDR,13.32.0.0/15,no-resolve
 IP-CIDR,13.35.0.0/17,no-resolve
 IP-CIDR,139.59.210.98/32,no-resolve
 IP-CIDR,14.102.250.18/31,no-resolve
+IP-CIDR,146.66.152.0/24,no-resolve
+IP-CIDR,146.66.155.0/24,no-resolve
 IP-CIDR,147.92.128.0/17,no-resolve
 IP-CIDR,149.154.160.0/20,no-resolve
 IP-CIDR,149.154.166.111/32
+IP-CIDR,155.133.224.0/19,no-resolve
 IP-CIDR,157.240.0.0/17,no-resolve
 IP-CIDR,158.85.224.160/27,no-resolve
 IP-CIDR,158.85.46.128/27,no-resolve
 IP-CIDR,158.85.5.192/27,no-resolve
+IP-CIDR,162.254.192.0/21,no-resolve
 IP-CIDR,169.45.248.118/32,no-resolve
 IP-CIDR,17.252.156.0/23,no-resolve
 IP-CIDR,172.110.32.0/21,no-resolve
@@ -3321,9 +3330,11 @@ IP-CIDR,180.163.150.34/32,no-resolve
 IP-CIDR,180.163.151.162/32,no-resolve
 IP-CIDR,180.163.151.34/32,no-resolve
 IP-CIDR,184.173.128.0/17,no-resolve
+IP-CIDR,185.25.180.0/22,no-resolve
 IP-CIDR,185.60.216.0/22,no-resolve
 IP-CIDR,185.76.151.0/24,no-resolve
 IP-CIDR,192.133.76.0/22,no-resolve
+IP-CIDR,192.69.96.0/22,no-resolve
 IP-CIDR,196.55.216.167/32,no-resolve
 IP-CIDR,199.59.148.0/22,no-resolve
 IP-CIDR,199.96.56.0/21,no-resolve
@@ -3337,7 +3348,10 @@ IP-CIDR,203.208.40.0/23,no-resolve
 IP-CIDR,203.208.43.0/24,no-resolve
 IP-CIDR,203.208.50.0/24,no-resolve
 IP-CIDR,204.15.20.0/22,no-resolve
+IP-CIDR,205.196.6.0/24,no-resolve
 IP-CIDR,208.43.0.0/16,no-resolve
+IP-CIDR,208.64.200.0/22,no-resolve
+IP-CIDR,208.78.164.0/22,no-resolve
 IP-CIDR,209.237.192.0/19,no-resolve
 IP-CIDR,216.239.36.145/32
 IP-CIDR,216.73.80.0/20,no-resolve
@@ -3351,6 +3365,7 @@ IP-CIDR,31.13.64.0/18,no-resolve
 IP-CIDR,34.224.0.0/12,no-resolve
 IP-CIDR,35.157.215.84/32,no-resolve
 IP-CIDR,35.157.217.255/32,no-resolve
+IP-CIDR,45.121.184.0/24,no-resolve
 IP-CIDR,45.64.40.0/22,no-resolve
 IP-CIDR,5.28.192.0/18,no-resolve
 IP-CIDR,50.22.198.204/30,no-resolve
